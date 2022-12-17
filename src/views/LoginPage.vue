@@ -3,12 +3,12 @@
         <img src="../assets/logotipo.png" alt="" id="logo-empresa">
         <div class="register-page">
             <form >
-                <h1>Create an account</h1>
+                <h1>Entrar na conta</h1>
                 <label for="">E-mail</label>
                 <input type="email" class="email" required v-model="email">
                 <label for="">Senha</label>
                 <input type="password" class="senha" required v-model="pass">
-                <button id="register" @click="register">Continuar</button>
+                <button id="login" @click="login">Continuar</button>
             </form>
         </div>
         
@@ -16,7 +16,7 @@
             <h5>Novo na TTOW</h5>
         </div>
 
-        <!-- <button id="register">Criar nova conta</button> -->
+        <button id="register" @click="register">Criar nova conta</button>
 
     </main>
 </template>
@@ -36,25 +36,16 @@
     //     }
     // }
 
-    import { ref } from "vue";
-    import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+    // import { ref } from "vue";
+    // import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+    
+    // const email = ref("");
+    // const password = ref("");
     import { useRouter } from 'vue-router';
-
-    const email = ref("");
-    const password = ref("");
     const router = useRouter()
     
     const register = () => {
-        console.log("REGISTER!!");
-        createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-            .then(()=> {
-                console.log("Registrador com sucesso!!");
-                router.push('./endereco')
-            })
-            .catch((error) => {
-                console.log(error.code);
-                alert(error.message);
-            })
+        router.push('./register')
     };
 
 
@@ -78,7 +69,7 @@ main h1{
     width: 12;  
     height: 60px;
 }
-#register{
+#login{
     margin-top: 50px;
     height: 30px;
     cursor: pointer;
@@ -87,11 +78,11 @@ main h1{
     color: #fff;
     background-image:linear-gradient(#2a4d7a, #2d4158);
 }
-#register:hover{
-    background-image:linear-gradient(#2a4d7ac2, #2d4158c2);
+#login:hover{
+    background-image:linear-gradient(#2a4d7ae0, #2d4158ef);
 }
 
-/* #register{
+#register{
     height: 30px;
     width: 350px;
     cursor: pointer;
@@ -102,7 +93,7 @@ main h1{
 }
 #register:hover{
     background-image:linear-gradient(#131921e7, #202d3dec);
-} */
+}
 .register-page form{
     display: flex;
     flex-direction: column;
@@ -114,8 +105,14 @@ main h1{
     border: 2px solid #808080b4;
     border-radius: 4px;
 }
+.register-page form label{
+  font-weight: bold;
+}
 .senha, .email{
     height: 30px;
+    margin-bottom: 15px;
+    text-indent: 5px;
+
 }
 .nova-conta{
     text-align: center;
@@ -130,7 +127,7 @@ main h1{
 .nova-conta h5{
     line-height: 1;
     font-size: 15px;
-    color: #000000;
+    color: #141414b4;
     z-index: 10;
     position: relative;
     display: inline-block;

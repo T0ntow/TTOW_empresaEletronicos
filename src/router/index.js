@@ -2,7 +2,7 @@ import {createRouter, createWebHistory } from 'vue-router'
 import Endereco from '../views/EnderecoPage.vue'
 import Home from '../views/HomePage.vue'
 import Login from '../views/LoginPage.vue'
-
+import Register from '../views/RegisterPage.vue'
 
 const routes = [
   {
@@ -19,6 +19,11 @@ const routes = [
     path: '/login', 
     name: 'login', 
     component: Login
+  },
+  {
+    path: '/register', 
+    name: 'register', 
+    component: Register
   }
 ];
 

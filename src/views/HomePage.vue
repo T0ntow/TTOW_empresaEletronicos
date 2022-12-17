@@ -1,28 +1,44 @@
 <template>
-    <h1>HOME PAGE</h1>
-    <div id="secoes">
-        <a><img src="../assets/games.png" alt=""><span>Games</span></a>
-        <a><img src="../assets/celulares.png" alt=""><span>Celulares</span></a>
-        <a><img src="../assets/tvs.png" alt=""><span>TV's</span></a>
-        <a><img src="../assets/informatica.png" alt=""><span>Informática</span></a>
-        <a><img src="../assets/headset.png" alt=""><span>Headsets</span></a>
-        <a><img src="../assets/relogios.png" alt=""><span>Relógios</span></a>
-        <a><img src="../assets/camera.png" alt=""><span>Câmeras</span></a>
-        <a><img src="../assets/games.png" alt=""><span>Games</span></a>
-
-    </div>
+    <body>
+        <div class="container-secoes">
+           <h2>Tem na TTOW</h2>
+            <div id="secoes">
+                <a><img src="../assets/games.png" alt=""><span>Games</span></a>
+                <a><img src="../assets/celulares.png" alt=""><span>Celulares</span></a>
+                <a><img src="../assets/tvs.png" alt=""><span>TV's</span></a>
+                <a><img src="../assets/informatica.png" alt=""><span>Informática</span></a>
+                <a><img src="../assets/headset.png" alt=""><span>Headsets</span></a>
+                <a><img src="../assets/relogios.png" alt=""><span>Relógios</span></a>
+                <a><img src="../assets/camera.png" alt=""><span>Câmeras</span></a>
+                <a><img src="../assets/games.png" alt=""><span>Games</span></a>
+            </div>
+        </div>
+    </body>
 </template>
 <script>
 
 </script>
 
 <style scoped>
+body{
+    height: 100vh;
+    background-color: #EAEDED;
+}
+.container-secoes{
+    padding: 20px 0 40px 0;
+    background-color: #fff;
+
+    width: 96vw;
+    margin:auto;
+}
+.container-secoes h2{
+    padding: 10px;
+}
 #secoes {
     display: flex;
     justify-content: space-evenly;
     list-style: none;
 
-    margin: 25px 15px;
     padding: 15px;
 }
 
@@ -42,20 +58,40 @@
     justify-content: center;
     align-items: center;
 
-    padding: 25px;
+    padding: 20px;
     border-radius: 50%;
-    margin: 0 10px;
 
     color: black;
-    background-color: #193150;
+    background-color: #143a6b;
     border-bottom: 7px solid #fd4141;
-    border-right: 3px solid #fd4141;
-    border-left: 3px solid #fd4141;
+
+
 }
 
 #secoes a:hover {
-    transition-duration: .2s;
-    background-color: #fd4141;
     cursor: pointer;
+    animation: colorFull .1s both;
 }
+
+@keyframes colorFull {
+    0%{
+        background:linear-gradient(0deg, #fd4141 0%, #143a6b 40%);
+    }
+    15%{
+        background:linear-gradient(0deg, #fd4141 15%, #143a6b 40%);
+    }
+    30%{
+        background:linear-gradient(0deg, #fd4141 30%, #143a6b 40%);
+    }
+    60%{
+        background:linear-gradient(0deg, #fd4141 60%, #143a6b 40%);
+    }
+    90%{
+        background:linear-gradient(0deg, #fd4141 90%, #143a6b 40%);
+    }
+    100%{
+        background:linear-gradient(0deg, #fd4141 100%, #143a6b 0%);
+    }
+}
+
 </style>
