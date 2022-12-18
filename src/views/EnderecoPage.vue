@@ -3,10 +3,8 @@
         <div class="container-localizacao">
             <form action="">
                 <h1>Escolha sua localização</h1>
-                <button id="login">Faça login</button>
-
-                <br>
-
+                <router-link to="/login" id="login">Faça login</router-link>
+                
                 <h2 for=""> ou insira um CEP do Brasil</h2>
 
                 <div class="cep">
@@ -38,14 +36,18 @@ input:focus{
 }
 
 #login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto 0px auto;
+    
     height: 30px;
     width: 80%;
     cursor: pointer;
     border: none;
     border-radius: 4px;
     background-color: #3a6ba8;
-
-    margin: 15px 0;
+    color: #fff;
 }
 #login:hover{
     opacity: .9;
@@ -64,6 +66,7 @@ input:focus{
     border-radius: 12px;
     text-align: center;
     height: 200px;
+    background-color: #f1f1f1a8;
 }
 
 .container-localizacao form h1 {

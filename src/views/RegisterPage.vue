@@ -5,18 +5,18 @@
             <form>
                 <h1>Criar a conta</h1>
                 <label for="">Seu nome</label>
-                <input type="text" class="nome" required>
+                <input type="text" class="nome" required v-model="nome">
 
                 <label for="">Seu E-mail</label>
-                <input type="email" class="email" required>
+                <input type="email" class="email" required v-model="email">
 
                 <label for="">Senha</label>
-                <input type="password" class="senha" required>
+                <input type="password" class="senha" required v-model="password">
 
-                <label for="">Insira a senha mais uma vez</label>
-                <input type="password" class="senha" required>
+                <label for="">CEP</label>
+                <input type="text" class="cep" required v-model="cep" maxlength="8">
 
-                <button id="register">Continuar</button>
+                <button id="register" @click="register">Continuar</button>
 
                 <div class="div-login">
                     <p>Você ja tem uma conta? <router-link to="/login">Fazer login</router-link></p>
@@ -27,6 +27,36 @@
 
     </main>
 </template>
+
+<script>
+import { defineComponent } from "vue";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+// import router from "@/router";
+
+export default defineComponent({
+    name: 'sigin-form',
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        async register() {
+            try {
+                await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+                // alert("CONTA CRIADA COM SUCESSO") //não ta chegando
+            } 
+            catch (err) {
+                alert('deu n' + err.message)
+            }
+        },
+          
+    },
+});
+
+</script>
 
 <style scoped>
 main {
@@ -87,7 +117,8 @@ main h1 {
 
 .senha,
 .email,
-.nome {
+.nome,
+.cep {
     height: 30px;
     margin-bottom: 15px;
     text-indent: 5px;

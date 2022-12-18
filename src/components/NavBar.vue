@@ -1,15 +1,13 @@
 <template>
   <nav id="nav-bar-principal">
     <div class="nav-left">
-
       <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
       <router-link class="endereco" to="/endereco" @click="clique">
         <p>
-          Olá <br/>
+          Olá {{nome}}<br/>
           Selecione o endereco
       </p>
       </router-link>
-
       
     </div>
 
@@ -22,6 +20,7 @@
 
     <div class="nav-right">
       <router-link class="login" to="/login"> Login </router-link>
+
     </div>
   </nav>
 </template>
@@ -30,7 +29,6 @@
 export default {
   name: "navBar",
 };
-
 
 </script>
   
