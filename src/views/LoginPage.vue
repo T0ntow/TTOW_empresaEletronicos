@@ -2,7 +2,7 @@
     <main>
         <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
         <div class="register-page">
-            <form>
+            <form @submit.prevent="submitForm">
                 <h1>Entrar na conta</h1>
                 <label for="">E-mail</label>
                 <input type="email" class="email" required v-model="email" />
@@ -35,15 +35,13 @@ export default defineComponent({
         }
     },
     methods: {
-        async login() {
+        async submitForm() {
             try {
                 await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-                // alert("Bem vindo")
-                // console.log("BEM VINDO");
-                // // alert(`Seja bem vindo, ${{email}}`)
+                alert('Seja bem vindo ' + this.email)
+                router.push('/')
             } catch (err) {
                 alert('deu BO ae em:  ' + err.message)
-                // console.log("BO: " + err.message);
             }   
         },
        

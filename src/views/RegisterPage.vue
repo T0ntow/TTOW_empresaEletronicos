@@ -29,42 +29,6 @@
 </template>
 
 <script>
-// import { defineComponent } from "vue";
-// import firebase from "firebase/compat/app";
-// import "firebase/compat/auth";
-
-// import { db } from '../main.js'
-
-// export default defineComponent({
-//     name: 'sigin-form',
-//     data() {
-//         return {
-//             email: '',
-//             password: '',
-//             cep: '',
-//             name: ''
-//         }
-//     },
-//     methods: {
-//         async submitForm() {
-//             try {
-//                 await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
-//                 await db.collection('users').add({
-//                     name: this.name,
-//                     cep: this.cep,
-//                 })
-
-//                     this.email = '',
-//                     this.password = '',
-//                     this.name = '', 
-//                     this.cep = ''
-//             }
-//             catch (err) {
-//                 alert('Deu BO ae pai: ' + err.message)
-//             }
-//         },
-//     },
-// });
 import { defineComponent } from "vue";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
