@@ -1,8 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+
+createApp(App)
+.use(router)
+.mount('#app');
+
 import firebase from "firebase/compat/app";
-// import { initializeApp } from "firebase/app";
+import "firebase/database";
 
 const firebaseConfig = {
     apiKey: "AIzaSyA1icqWsJBVND3y167GsGoFIVZEDMVnL2w",
@@ -12,9 +17,5 @@ const firebaseConfig = {
     messagingSenderId: "195840212667",
     appId: "1:195840212667:web:cc240a01a5cb23c6a4b39e"
 };
-
 firebase.initializeApp(firebaseConfig);
-
-createApp(App)
-.use(router)
-.mount('#app');
+// export const db = firebase.firestore();

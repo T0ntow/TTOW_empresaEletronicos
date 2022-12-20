@@ -2,10 +2,10 @@
     <main>
         <img src="../assets/logotipo.png" alt="" id="logo-empresa">
         <div class="register-page">
-            <form>
+            <form @submit.prevent="submitForm">
                 <h1>Criar a conta</h1>
                 <label for="">Seu nome</label>
-                <input type="text" class="nome" required v-model="nome">
+                <input type="text" class="nome" required v-model="name">
 
                 <label for="">Seu E-mail</label>
                 <input type="email" class="email" required v-model="email">
@@ -29,30 +29,77 @@
 </template>
 
 <script>
+// import { defineComponent } from "vue";
+// import firebase from "firebase/compat/app";
+// import "firebase/compat/auth";
+
+// import { db } from '../main.js'
+
+// export default defineComponent({
+//     name: 'sigin-form',
+//     data() {
+//         return {
+//             email: '',
+//             password: '',
+//             cep: '',
+//             name: ''
+//         }
+//     },
+//     methods: {
+//         async submitForm() {
+//             try {
+//                 await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+//                 await db.collection('users').add({
+//                     name: this.name,
+//                     cep: this.cep,
+//                 })
+
+//                     this.email = '',
+//                     this.password = '',
+//                     this.name = '', 
+//                     this.cep = ''
+//             }
+//             catch (err) {
+//                 alert('Deu BO ae pai: ' + err.message)
+//             }
+//         },
+//     },
+// });
 import { defineComponent } from "vue";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-// import router from "@/router";
+import "firebase/compat/firestore"
+import router from "@/router";
 
 export default defineComponent({
+
     name: 'sigin-form',
     data() {
         return {
             email: '',
             password: '',
-        }
+            cep: '',
+            name: ''
+        };
     },
     methods: {
-        async register() {
+        async submitForm() {
             try {
-                await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
-                // alert("CONTA CRIADA COM SUCESSO") //não ta chegando
-            } 
+                const db = firebase.firestore()
+                const { user } = await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+                await db.collection('users').doc(user.uid).set({
+                    name: this.name,
+                    email: this.email,
+                    cep: this.cep,
+                });
+
+                alert('Conta criada com sucesso seja bem vindo ' + this.name)
+                router.push('/')
+            }
             catch (err) {
-                alert('deu n' + err.message)
+                alert('Deu BO ae pai: ' + err.message)
             }
         },
-          
     },
 });
 
@@ -89,7 +136,7 @@ main h1 {
 }
 
 #register:hover {
-    background-image:linear-gradient(#2a4d7ae0, #2d4158ef);
+    background-image: linear-gradient(#2a4d7ae0, #2d4158ef);
 }
 
 .register-page form {
@@ -111,6 +158,7 @@ main h1 {
 .register-page form a {
     color: blue;
 }
+
 .register-page form a:hover {
     color: #FD4141;
 }
@@ -123,9 +171,11 @@ main h1 {
     margin-bottom: 15px;
     text-indent: 5px;
 }
+
 .div-login {
     margin: 20px 0;
 }
+
 .div-login p {
     text-indent: 10px;
 }

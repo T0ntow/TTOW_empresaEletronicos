@@ -2,9 +2,9 @@
   <nav id="nav-bar-principal">
     <div class="nav-left">
       <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
-      <router-link class="endereco" to="/endereco" @click="clique">
+      <router-link class="endereco" to="/endereco">
         <p>
-          Olá {{nome}}<br/>
+          Olá<br/>
           Selecione o endereco
       </p>
       </router-link>
@@ -12,7 +12,7 @@
     </div>
 
     <div class="nav-center">
-      <input type="text" v-model="pesquisa" placeholder="Busque por um item" />
+      <input type="text" placeholder="Busque por um item" />
       <button class="search-button">
         <img src="../assets/search.svg" alt="" />
       </button>
