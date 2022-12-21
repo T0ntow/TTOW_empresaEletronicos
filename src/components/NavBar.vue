@@ -21,7 +21,6 @@
     </div>
 
     <div class="nav-right">
-      <router-link class="login" to="/">Conecte-se</router-link>
       <button @click="sair">Sair</button>
       <router-link to="/carrinho"> Carrinho </router-link>
     </div>
@@ -31,6 +30,7 @@
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import router from "@/router";
 export default {
   name: "navBar",
 
@@ -38,6 +38,7 @@ export default {
     sair: function () {
       firebase.auth().signOut().then(() => {
         alert("conta deslogada")
+        router.push('/')
       })
     }
   }
@@ -75,8 +76,7 @@ nav {
 
 .nav-right {
   display: flex;
-  min-width: 25vw;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .nav-center {

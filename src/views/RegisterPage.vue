@@ -54,7 +54,7 @@ export default defineComponent({
                 });
 
                 alert('Conta criada com sucesso seja bem vindo ' + this.name)
-                router.push('/')
+                router.push('/home')
             }
             catch (err) {
                 alert('Deu BO ae pai: ' + err.message)

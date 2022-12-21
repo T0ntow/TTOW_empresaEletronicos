@@ -8,59 +8,9 @@ import Carrinho from '../views/CarrinhoPage.vue'
 import Compra from '../views/CompraPage.vue'
 import AdcProduto from '../views/adcProduto.vue'
 
-
-// const routes = [
-//   // {
-//   //   path: '*', 
-//   //   redirect: '/login'
-//   // },
-//   {
-//   path: '/', 
-//   name: 'home', 
-//   component: Home
-//   },
-//   {
-//     path: '/endereco', 
-//     name: 'endereco', 
-//     component: Endereco
-//   },
-//   {
-//     path: '/login', 
-//     name: 'login', 
-//     component: Login
-//   },
-//   {
-//     path: '/register', 
-//     name: 'register', 
-//     component: Register
-//   },
-//   {
-//     path: '/produto', 
-//     name: 'produto', 
-//     component: Produto
-//   },
-//   {
-//     path: '/carrinho', 
-//     name: 'carrinho', 
-//     component: Carrinho
-//   },
-//   {
-//     path: '/compra', 
-//     name: 'compra', 
-//     component: Compra
-//   },
-//   {
-//     path: '/adcProduto', 
-//     name: 'adcProduto', 
-//     component: AdcProduto
-//   }
-// ];
+import firebase from 'firebase/compat/app'
 
 const routes = [
-  // {
-  //   path: '*', 
-  //   redirect: '/login'
-  // },
   {
     path: '/',
     name: 'login',
@@ -69,7 +19,10 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/endereco',
@@ -84,28 +37,64 @@ const routes = [
   {
     path: '/produto',
     name: 'produto',
-    component: Produto
+    component: Produto,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/carrinho',
     name: 'carrinho',
-    component: Carrinho
+    component: Carrinho,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/compra',
     name: 'compra',
-    component: Compra
+    component: Compra,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/adcProduto',
     name: 'adcProduto',
-    component: AdcProduto
+    component: AdcProduto,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  // Se o usuário não estiver logado, redireciona para a rota de login
+  if (requiresAuth && !currentUser) {
+    next('');
+    return;
+  }
+    if (requiresAuth && currentUser) {
+    next();
+    return;
+  }
+
+  // // Se a rota atual não exigir autenticação e o usuário já estiver logado, redireciona para a rota home
+  if (!requiresAuth && currentUser) {
+    next('home');
+    return;
+  }
+
+  // // Se nenhuma das condições acima for atendida, permite o acesso à rota
+  next();
 });
 
 export default router;

@@ -37,7 +37,7 @@ export default defineComponent({
             try {
                 await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 alert('Seja bem vindo ' + this.email)
-                router.push('/')
+                router.push('/home')
             } catch (err) {
                 alert('deu BO ae em:  ' + err.message)
             }   
