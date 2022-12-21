@@ -1,5 +1,5 @@
 <template>
-  <nav id="nav-bar-principal">
+  <nav id="nav-bar-principal" v-if="$route.path !== '/' && $route.path !== '/register' ">
     <div class="nav-left">
       <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
       <p v-if="logado">
@@ -31,15 +31,24 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import router from "@/router";
+
 export default {
   name: "navBar",
 
+  data() {
+    return {
+      mostrarComponente: true
+    }
+  },
   methods: {
     sair: function () {
       firebase.auth().signOut().then(() => {
         alert("conta deslogada")
         router.push('/')
       })
+    },
+    route() {
+      return this.$route
     }
   }
 }

@@ -19,7 +19,7 @@
                 <button id="register" @click="register">Continuar</button>
 
                 <div class="div-login">
-                    <p>Você ja tem uma conta? <router-link to="/login">Fazer login</router-link></p>
+                    <p>Você ja tem uma conta? <router-link to="/">Fazer login</router-link></p>
                 </div>
             </form>
         </div>
