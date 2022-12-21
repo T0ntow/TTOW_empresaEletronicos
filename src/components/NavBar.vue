@@ -1,14 +1,16 @@
 <template>
   <nav id="nav-bar-principal">
     <div class="nav-left">
-      <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
-      <router-link class="endereco" to="/endereco">
-        <p>
-          Olá<br/>
-          Selecione o endereco
+      <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
+      <p v-if="logado">
+        Olá {{ nome }}
       </p>
+
+      <router-link to="/adcProduto">
+        <p>+ Clique para adicinar um produto
+          e cresça conosco
+        </p>
       </router-link>
-      
     </div>
 
     <div class="nav-center">
@@ -19,16 +21,28 @@
     </div>
 
     <div class="nav-right">
-      <router-link class="login" to="/login"> Login </router-link>
-
+      <router-link class="login" to="/">Conecte-se</router-link>
+      <button @click="sair">Sair</button>
+      <router-link to="/carrinho"> Carrinho </router-link>
     </div>
   </nav>
 </template>
   
 <script>
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 export default {
   name: "navBar",
-};
+
+  methods: {
+    sair: function () {
+      firebase.auth().signOut().then(() => {
+        alert("conta deslogada")
+      })
+    }
+  }
+}
+
 
 </script>
   
@@ -56,10 +70,12 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 35vw;
 }
 
 .nav-right {
   display: flex;
+  min-width: 25vw;
   justify-content: space-between;
 }
 
@@ -73,6 +89,7 @@ nav {
 
 .nav-left a,
 .nav-right a {
+  font-size: 1rem;
   height: 45px;
   display: flex;
   align-items: center;
@@ -82,6 +99,31 @@ nav {
   position: inherit;
 
   border: 1px solid #131921;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.nav-right button {
+  font-size: 1rem;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+  padding: 5px;
+
+  position: inherit;
+
+  border: 1px solid #131921;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.nav-right button:hover {
+  cursor: pointer;
+  background-color: #1c2635;
+  border-radius: 7px;
+
+  border: 1px solid white;
 }
 
 .nav-left a:hover,
@@ -138,5 +180,4 @@ nav {
 
   position: static;
 }
-
 </style>

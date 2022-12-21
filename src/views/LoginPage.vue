@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main id="inicio">
         <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
         <div class="register-page">
             <form @submit.prevent="submitForm">
@@ -11,11 +11,9 @@
                 <button id="login" @click="login">Continuar</button>
             </form>
         </div>
-
         <div class="nova-conta">
             <h5>Novo na TTOW</h5>
         </div>
-
         <button id="register" @click="register">Criar nova conta</button>
     </main>
 </template>
@@ -52,8 +50,6 @@ export default defineComponent({
 });
 
 </script>
-
-
 <style scoped>
 main {
     display: flex;
@@ -61,6 +57,7 @@ main {
     align-items: center;
     flex-direction: column;
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    min-height: 95vh;
 }
 
 main h1 {

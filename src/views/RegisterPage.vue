@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main id="inicio">
         <img src="../assets/logotipo.png" alt="" id="logo-empresa">
         <div class="register-page">
             <form @submit.prevent="submitForm">
@@ -23,8 +23,6 @@
                 </div>
             </form>
         </div>
-
-
     </main>
 </template>
 
@@ -34,9 +32,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore"
 import router from "@/router";
-
 export default defineComponent({
-
     name: 'sigin-form',
     data() {
         return {
@@ -76,6 +72,7 @@ main {
     align-items: center;
     flex-direction: column;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    min-height: 100vh;
 }
 
 main h1 {

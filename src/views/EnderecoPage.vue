@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main id="inicio">
         <div class="container-localizacao">
             <form action="">
                 <h1>Escolha sua localização</h1>
@@ -26,7 +26,8 @@ main {
     justify-content: center;
     align-items: center;
 
-    height: 60vh;
+    /* height: 60vh; */
+    min-height: 100vh;
 }
 input:focus{
     box-shadow: 0px 1px 9px 1px #141468;
