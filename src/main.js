@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+// import * as storage from '@google-cloud/storage';
 
 createApp(App)
 .use(router)
@@ -19,3 +20,4 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 // export const db = firebase.firestore();
+// const storage = firebase.storage(); 

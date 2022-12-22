@@ -1,31 +1,53 @@
 <template>
+
     <body id="inicio">
-        <main >
+        <main>
             <div class="container-secoes">
                 <h2>Tem na TTOW</h2>
                 <div id="secoes">
-                    <a><img src="../assets/games.png" alt=""><span>Games</span></a>
-                    <a><img src="../assets/celulares.png" alt=""><span>Celulares</span></a>
-                    <a><img src="../assets/tvs.png" alt=""><span>TV's</span></a>
-                    <a><img src="../assets/informatica.png" alt=""><span>Informática</span></a>
-                    <a><img src="../assets/headset.png" alt=""><span>Headsets</span></a>
-                    <a><img src="../assets/relogios.png" alt=""><span>Relógios</span></a>
-                    <a><img src="../assets/camera.png" alt=""><span>Câmeras</span></a>
-                    <a><img src="../assets/games.png" alt=""><span>Games</span></a>
+                    <a src=""><img src="../assets/games.png" alt="" /><span>Periféricos</span></a>
+                    <a src=""><img src="../assets/celulares.png" alt="" /><span>Celulares</span></a>
+                    <a src=""><img src="../assets/tvs.png" alt="" /><span>TV's</span></a>
+                    <a src=""><img src="../assets/pc.png" alt="" /><span>Computadores</span></a>
+                    <a src=""><img src="../assets/relogios.png" alt="" /><span>Relógios</span></a>
+                    <a src=""><img src="../assets/camera.png" alt="" /><span>Câmeras</span></a>
                 </div>
             </div>
-            <div class="produtos">
-                <router-link to="/produto">
-                    <img class="produto" src="../assets/controle.jpg" alt="">
-                </router-link>
-            </div>
 
+            <div class="box-produtos" ref="boxProdutos">
+                <button class="setas seta-esquerda" @click="scrollBack">
+                    <img src="../assets/left-arrow.png" class="img-seta" alt="" />
+                </button>
+                <div class="produtos">
+                    <router-link to="/produto">
+                        <img class="produto" src="../assets/controle.jpg" alt="" />
+                    </router-link>
+                </div>
+                <div class="produtos">
+                    <router-link to="/produto">
+                        <img class="produto" src="../assets/controle.jpg" alt="" />
+                    </router-link>
+                </div>
+
+                <button class="setas seta-direita" @click="scrollForward">
+                    <img src="../assets/right-arrow.png" alt="" class="img-seta" />
+                </button>
+            </div>
         </main>
     </body>
 </template>
+
 <script>
-
-
+export default {
+    methods: {
+        scrollBack() {
+            this.$refs.boxProdutos.scrollBy({ left: -300, behavior: "smooth" });
+        },
+        scrollForward() {
+            this.$refs.boxProdutos.scrollBy({ left: 300, behavior: "smooth" });
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -36,7 +58,7 @@ main {
 body {
     height: 100vh;
     padding: 15px;
-    background-color: #EAEDED;
+    background-color: #eaeded;
 }
 
 .container-secoes {
@@ -80,15 +102,12 @@ body {
     color: black;
     background-color: #143a6b;
     border-bottom: 7px solid #fd4141;
-
-
 }
 
 #secoes a:hover {
     cursor: pointer;
-    animation: colorFull .1s both;
+    animation: colorFull 0.1s both;
 }
-
 
 @keyframes colorFull {
     0% {
@@ -116,12 +135,20 @@ body {
     }
 }
 
+.box-produtos {
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    overflow-y: hidden;
+    margin: auto;
+}
+
 .produtos {
     height: 250px;
     width: 350px;
 
     background-color: #fff;
-    margin: 15px 0;
+    margin: 15px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,5 +157,36 @@ body {
 .produtos .produto {
     width: 300px;
     height: 200px;
+}
+
+.setas {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(202, 202, 202);
+}
+
+.setas:hover {
+    filter: brightness(0.9);
+}
+
+.seta-esquerda {
+    min-width: 40px;
+    height: 120px;
+
+    position: absolute;
+    transform: translate(15px, 80px);
+}
+
+.seta-direita {
+    min-width: 40px;
+    height: 120px;
+    position: absolute;
+    transform: translate(93vw, 80px);
+}
+
+.img-seta {
+    width: 20px;
+    height: 20px;
 }
 </style>

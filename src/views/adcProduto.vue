@@ -2,52 +2,123 @@
 
     <body>
         <main id="inicio">
-            <div class="box">
-                <div class="box-select">
-                    <label for="">Nome do produto</label>
-                    <input type="text" class="select">
-                </div>
+            <form @submit.prevent="adicionarProduto">
+                <div class="box">
+                    <div class="box-select">
+                        <label for="">Nome do produto</label>
+                        <input type="text" class="select" v-model="nome" required />
+                    </div>
 
-                <div class="box-select">
-                    <label for="">Selecione a categoria do produto</label>
-                    <select name="" class="select" id="select-category">
-                        <option class="options" value="">Games</option>
-                        <option class="options" value="">Celulares</option>
-                        <option class="options" value="">Tv's</option>
-                        <option class="options" value="">Computadores</option>
-                        <option class="options" value="">Headsets</option>
-                        <option class="options" value="">Relogios</option>
-                        <option class="options" value="">Câmeras</option>
-                    </select>
+                    <div class="box-select">
+                        <label for="">Selecione o preço</label>
+                        <input type="number" class="select" v-model="preco" required />
+                    </div>
+                    <div class="box-select">
+                        <label for="">Descrição do produto</label>
+                        <input type="text" class="select" max="300" id="description
+                       " v-model="descricao" required />
+                    </div>
+                    <div class="box-select">
+                        <label for="">Selecione a categoria do produto</label>
+                        <select name="" class="select" id="select-category" v-model="categoria">
+                            <option class="options" value="Periféricos">Periféricos</option>
+                            <option class="options" value="Celulares">Celulares</option>
+                            <option class="options" value="Tv's">Tv's</option>
+                            <option class="options" value="Computadores">Computadores</option>
+                            <option class="options" value="Relogios">Relogios</option>
+                            <option class="options" value="Câmeras">Câmeras</option>
+                        </select>
+                    </div>
+                    <div class="box-select">
+                        <label for="">Envie suas fotos</label>
+                        <input type="file" class="select" multiple="multiple" />
+                    </div>
+                    <div class="box-select">
+                        <button class="button">
+                            Clique para adicionar um novo produto
+                        </button>
+                    </div>
                 </div>
-                
-                <div class="box-select">
-                    <label for="">Selecione o preço</label>
-                    <input type="number" class="select" >
-                </div>
-
-                <div class="box-select">
-                    <label for="">Descrição do produto</label>
-                   <input type="text" class="select" max="300" id="description
-                   ">
-                </div>
-
-                <div class="box-select">
-                    <label for="">Envie suas fotos </label>
-                    <input type="file" class="select" multiple="multiple">
-                </div>
-
-                <div class="box-select"><button class="button">Clique para adicionar um novo produto</button></div>
-            </div>
+            </form>
         </main>
     </body>
 </template>
+<script>
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore"
+import { storage } from "@/main";
+export default {
+    data() {
+        return {
+            nome: "",
+            categoria: "",
+            preco: "",
+            descricao: "",
+        };
+    },
+    methods: {
+        adicionarProduto() {
+            const db = firebase.firestore()
 
+            db.collection("products")
+                .add({
+                    nome: this.nome,
+                    categoria: this.categoria,
+                    preco: this.preco,
+                    descricao: this.descricao,
+                })
+                .then(() => {
+                    this.nome = "",
+                        this.categoria = "",
+                        this.preco = "",
+                        this.descricao = "",
+
+                        console.log("Produto adicionado com sucesso");
+                    alert("Produto adicionado com sucesso")
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+
+        async uploadImage(image) {
+            // Gera um nome único para a imagem
+            const imageName = `${Date.now()}-${image.name}`;
+
+            // Cria uma referência para o arquivo no Cloud Storage
+            const imageRef = storage.ref(`images/${imageName}`);
+
+            // Envia a imagem para o Cloud Storage
+            await imageRef.put(image);
+
+            // Obtém a URL pública da imagem
+            const imageUrl = await imageRef.getDownloadURL();
+
+            // Retorna a URL da imagem
+            return imageUrl;
+        },
+        async submitForm(event) {
+            // Previne o envio do formulário
+            event.preventDefault();
+
+            // Obtém a imagem do formulário
+            const image = event.target.image.files[0];
+
+            // Envia a imagem para o Cloud Storage
+            const imageUrl = await this.uploadImage(image);
+
+            // Adiciona a URL da imagem ao documento do Cloud Firestore
+            await firebase.firestore().collection('images').add({ imageUrl });
+        }
+
+    },
+};
+</script>
 <style scoped>
 body {
-    background-color: #EAEDED;
+    background-color: #eaeded;
     padding: 15px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 main {
@@ -55,9 +126,11 @@ main {
     display: flex;
     justify-content: center;
 }
-#obs{
-    font-size: .8rem;
+
+#obs {
+    font-size: 0.8rem;
 }
+
 .box {
     min-width: 800px;
     height: 400px;
@@ -79,24 +152,28 @@ main {
     width: 220px;
     font-size: 1rem;
 }
-label{
+
+label {
     font-size: 1.3rem;
     color: #2a4d7a;
     font-weight: bold;
 }
+
 .select {
     height: 40px;
     width: 350px;
 }
-#description{
+
+#description {
     height: 70px;
     overflow: scroll;
-    
 }
-.options{
+
+.options {
     font-size: 1rem;
 }
-.box-select{
+
+.box-select {
     display: flex;
     flex-direction: row;
     margin: 20px 0;
@@ -105,6 +182,4 @@ label{
 </style>
 
 <script>
-
-
 </script>
