@@ -36,16 +36,18 @@ export default defineComponent({
         async submitForm() {
             try {
                 await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-                alert('Seja bem vindo ' + this.email)
+                // alert('Seja bem vindo ' + this.email)
                 router.push('/home')
             } catch (err) {
                 alert('deu BO ae em:  ' + err.message)
-            }   
+            }
+
+           
         },
-       
         register() {
             router.push('./register')
-        }   
+        },
+            
     },
 });
 

@@ -1,4 +1,5 @@
 <template>
+
   <body>
     <main id="inicio">
       <div class="box-produto">
@@ -13,8 +14,7 @@
         </div>
         <div class="titulo-produto">
           <h1>
-            Controlador sem fio Compatível com PS4,Double Vibration/6-Asix/Audio
-            Functional Gamepad Remote Compatível com PS4/Pro/Slim, PC e PS3-Black
+            {{ message }} 
           </h1>
         </div>
         <div class="informes-produto">
@@ -25,16 +25,13 @@
           <div class="entrega"></div>
           <div class="box-adicionar-produto">
             <router-link to="/carrinho" id="adc-produto">Adicionar ao carrinho</router-link>
-            <router-link to="/compra"  id="comp-produto">Comprar produto</router-link>
+            <router-link to="/compra" id="comp-produto">Comprar produto</router-link>
           </div>
         </div>
       </div>
-      <!-- <div class="detalhes-produto">
-          <h3>Detalhes do produto</h3>
-      </div> -->
       <hr>
       <div class="descrição-produto">
-          <h3>Decrição do produto</h3>
+        <h3>Decrição do produto</h3>
         <p class="descricao">
           Tem produtos em oferta nas diversas categorias no site da Amazon, mas se
           o que você quer é a melhor oportunidade para comprar um Controle
@@ -51,7 +48,7 @@
           4; basta conectá-lo ao sistema do PS4. Esse controle também tem recursos
           inovadores e revolucionários como o touchpad, a barra de luz e o
           alto-falante integrados. Aproveite para comprar online no site da Amazon
-      o Dualshock 4 um excelente preço!
+          o Dualshock 4 um excelente preço!
         </p>
       </div>
     </main>
@@ -59,16 +56,22 @@
 </template>
 
 <script>
+export default {
+    message: 'Hello Vue.js!'
+  }
+
 </script>
 
 <style scoped>
 body {
   padding: 15px;
 }
-h3{
-    color: #2f67af;
-    font-size: 1.5rem;
+
+h3 {
+  color: #2f67af;
+  font-size: 1.5rem;
 }
+
 .box-produto {
   width: 100%;
   height: 550px;
@@ -159,7 +162,7 @@ h3{
   flex-direction: column;
 }
 
-.box-adicionar-produto a{
+.box-adicionar-produto a {
   height: 30px;
   margin-bottom: 10px;
   border: none;
@@ -183,10 +186,12 @@ h3{
 #comp-produto {
   background-color: rgb(90, 107, 255);
 }
-.descrição-produto{
-    padding: 10px;
+
+.descrição-produto {
+  padding: 10px;
 }
-.descrição-produto .descricao{
-    padding: 15px;
+
+.descrição-produto .descricao {
+  padding: 15px;
 }
 </style>

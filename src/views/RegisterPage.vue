@@ -47,21 +47,27 @@ export default defineComponent({
             try {
                 const db = firebase.firestore()
                 const { user } = await firebase.auth().createUserWithEmailAndPassword(this.email, this.password);
+
                 await db.collection('users').doc(user.uid).set({
                     name: this.name,
                     email: this.email,
                     cep: this.cep,
                 });
-
+                const userName = this.name;
                 alert('Conta criada com sucesso seja bem vindo ' + this.name)
+                console.log("UserName: " + userName);
                 router.push('/home')
+                
             }
             catch (err) {
                 alert('Deu BO ae pai: ' + err.message)
             }
+
         },
+
     },
 });
+// export const userName = this.name;
 
 </script>
 

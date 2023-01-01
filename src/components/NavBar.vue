@@ -1,11 +1,7 @@
 <template>
-  <nav id="nav-bar-principal" v-if="$route.path !== '/' && $route.path !== '/register' ">
+  <nav id="nav-bar-principal" v-if="$route.path !== '/' && $route.path !== '/register'">
     <div class="nav-left">
-      <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""> </router-link>
-      <p v-if="logado">
-        Olá {{ nome }}
-      </p>
-
+      <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""></router-link>
       <router-link to="/adcProduto">
         <p>+ Clique para adicinar um produto
           e cresça conosco
@@ -22,7 +18,7 @@
 
     <div class="nav-right">
       <button @click="sair">Sair</button>
-      <router-link to="/carrinho"> Carrinho </router-link>
+      <router-link to="/carrinho" @click="created"> Carrinho </router-link>
     </div>
   </nav>
 </template>
@@ -37,22 +33,21 @@ export default {
 
   data() {
     return {
-      mostrarComponente: true
+      
     }
   },
   methods: {
     sair: function () {
       firebase.auth().signOut().then(() => {
-        alert("conta deslogada")
+        // alert("conta deslogada")
         router.push('/')
       })
     },
     route() {
       return this.$route
-    }
+    },
   }
 }
-
 
 </script>
   

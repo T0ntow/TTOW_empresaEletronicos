@@ -54,7 +54,6 @@ a {
 #logo{
   width: 150px;
   height: 60px;
-
 }
 .inicio {
   background-color: #285ca1;
@@ -64,5 +63,7 @@ a {
 .info{
   text-indent: 15px;
   padding: 13px;
+  color:#fff;
+
 }
 </style>

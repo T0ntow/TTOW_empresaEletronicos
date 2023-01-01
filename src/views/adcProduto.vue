@@ -46,7 +46,6 @@
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore"
-import { storage } from "@/main";
 export default {
     data() {
         return {
@@ -81,35 +80,26 @@ export default {
                 });
         },
 
-        async uploadImage(image) {
-            // Gera um nome único para a imagem
-            const imageName = `${Date.now()}-${image.name}`;
+        // async uploadImage(image) {
+        //     const imageName = `${Date.now()}-${image.name}`;
+        //     const imageRef = storage.ref(`images/${imageName}`);
+        //     await imageRef.put(image);
+        //     const imageUrl = await imageRef.getDownloadURL();
+        //     return imageUrl;
+        // },
+        // async submitForm(event) {
+        //     // Previne o envio do formulário
+        //     event.preventDefault();
 
-            // Cria uma referência para o arquivo no Cloud Storage
-            const imageRef = storage.ref(`images/${imageName}`);
+        //     // Obtém a imagem do formulário
+        //     const image = event.target.image.files[0];
 
-            // Envia a imagem para o Cloud Storage
-            await imageRef.put(image);
+        //     // Envia a imagem para o Cloud Storage
+        //     const imageUrl = await this.uploadImage(image);
 
-            // Obtém a URL pública da imagem
-            const imageUrl = await imageRef.getDownloadURL();
-
-            // Retorna a URL da imagem
-            return imageUrl;
-        },
-        async submitForm(event) {
-            // Previne o envio do formulário
-            event.preventDefault();
-
-            // Obtém a imagem do formulário
-            const image = event.target.image.files[0];
-
-            // Envia a imagem para o Cloud Storage
-            const imageUrl = await this.uploadImage(image);
-
-            // Adiciona a URL da imagem ao documento do Cloud Firestore
-            await firebase.firestore().collection('images').add({ imageUrl });
-        }
+        //     // Adiciona a URL da imagem ao documento do Cloud Firestore
+        //     await firebase.firestore().collection('images').add({ imageUrl });
+        // }
 
     },
 };
@@ -133,7 +123,7 @@ main {
 
 .box {
     min-width: 800px;
-    height: 400px;
+    height: 500px;
     background-color: #fff;
 
     padding: 20px;
