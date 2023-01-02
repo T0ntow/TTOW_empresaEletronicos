@@ -61,32 +61,25 @@ export default {
   methods: {
     adicionarProduto() {
       const db = firebase.database();
-      const id = db.ref("products").push({
-        nome: this.nome,
-        categoria: this.categoria,
-        preco: this.preco,
-        descricao: this.descricao,
-      });
-
-      // cria um objeto produto com o ID gerado pelo firebase
-      const produto = {
-        id: id,
-        nome: this.nome,
-        categoria: this.categoria,
-        preco: this.preco,
-        descricao: this.descricao,
-      };
-
-      this.nome = "";
-      this.categoria = "";
-      this.preco = "";
-      this.descricao = "";
-      alert("Produto adicionado com sucesso");
-      console.log("id: " + id); // exibe o ID gerado pelo firebase no console
-
-      this.produtos.push(produto);
+        db.ref("products")
+          .push({
+            nome: this.nome,
+            categoria: this.categoria,
+            preco: this.preco,
+            descricao: this.descricao,
+          })
+          .then(() => {
+            this.nome = "";
+            this.categoria = "";
+            this.preco = "";
+            this.descricao = "";
+            alert("Produto adicionado com sucesso");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      },
     }
-  },
 };
 </script>
 <style scoped>

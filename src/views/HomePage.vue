@@ -35,10 +35,10 @@ import ProdutosHome from '../components/ProdutosHome.vue'
 export default {
   methods: {
     scrollBack() {
-      this.$refs.boxProdutos.scrollBy({ left: -300, behavior: "smooth" });
+      this.$refs.boxProdutos.scrollBy({ left: -900, behavior: "smooth" });
     },
     scrollForward() {
-      this.$refs.boxProdutos.scrollBy({ left: 300, behavior: "smooth" });
+      this.$refs.boxProdutos.scrollBy({ left: 900, behavior: "smooth" });
     },
   },
   components: {

@@ -56,9 +56,8 @@ export default {
     // busca os detalhes do produto no database usando o ID do produto
     firebase.database().ref("products/" + id).on("value", snapshot => {
       if (snapshot.val() === null) {
-        // se o snapshot for nulo, redireciona para a página de listagem de produtos
         this.$router.push("/produtos");
-        console.log("nulo");
+        alert("Pagina não encontrada")
       } else {
         // se o snapshot não for nulo, atribui os detalhes do produto ao objeto produto
         this.produto = snapshot.val();

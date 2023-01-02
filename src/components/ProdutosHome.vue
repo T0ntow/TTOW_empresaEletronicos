@@ -21,13 +21,8 @@ export default {
       snapshot.forEach(childSnapshot => {
         const produto = {
           id: childSnapshot.key, // inclui o ID do produto no objeto produto
-          nome: childSnapshot.val().nome,
-          preco: childSnapshot.val().preco,
-          descricao: childSnapshot.val().descricao,
-          categoria: childSnapshot.val().categoria
         };
         this.produtos.push(produto);
-        console.log("produto.id " + produto.id);
       });
     });
   }
