@@ -1,173 +1,209 @@
 <template>
+  <body>
+    <main id="inicio">
+      <form @submit.prevent="adicionarProduto">
+        <div class="box">
+          <div class="box-select">
+            <label for="">Nome do produto</label>
+            <input type="text" class="select" v-model="nome" required />
+          </div>
 
-    <body>
-        <main id="inicio">
-            <form @submit.prevent="adicionarProduto">
-                <div class="box">
-                    <div class="box-select">
-                        <label for="">Nome do produto</label>
-                        <input type="text" class="select" v-model="nome" required />
-                    </div>
-
-                    <div class="box-select">
-                        <label for="">Selecione o preço</label>
-                        <input type="number" class="select" v-model="preco" required />
-                    </div>
-                    <div class="box-select">
-                        <label for="">Descrição do produto</label>
-                        <input type="text" class="select" max="300" id="description
-                       " v-model="descricao" required />
-                    </div>
-                    <div class="box-select">
-                        <label for="">Selecione a categoria do produto</label>
-                        <select name="" class="select" id="select-category" v-model="categoria">
-                            <option class="options" value="Periféricos">Periféricos</option>
-                            <option class="options" value="Celulares">Celulares</option>
-                            <option class="options" value="Tv's">Tv's</option>
-                            <option class="options" value="Computadores">Computadores</option>
-                            <option class="options" value="Relogios">Relogios</option>
-                            <option class="options" value="Câmeras">Câmeras</option>
-                        </select>
-                    </div>
-                    <div class="box-select">
-                        <label for="">Envie suas fotos</label>
-                        <input type="file" class="select" multiple="multiple" />
-                    </div>
-                    <div class="box-select">
-                        <button class="button">
-                            Clique para adicionar um novo produto
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </main>
-    </body>
+          <div class="box-select">
+            <label for="">Selecione o preço</label>
+            <input type="number" class="select" v-model="preco" required />
+          </div>
+          <div class="box-select">
+            <label for="">Descrição do produto</label>
+            <input
+              type="text"
+              class="select"
+              max="300"
+              id="description
+                       "
+              v-model="descricao"
+              required
+            />
+          </div>
+          <div class="box-select">
+            <label for="">Selecione a categoria do produto</label>
+            <select
+              name=""
+              class="select"
+              id="select-category"
+              v-model="categoria"
+            >
+              <option class="options" value="Periféricos">Periféricos</option>
+              <option class="options" value="Celulares">Celulares</option>
+              <option class="options" value="Tv's">Tv's</option>
+              <option class="options" value="Computadores">Computadores</option>
+              <option class="options" value="Relogios">Relogios</option>
+              <option class="options" value="Câmeras">Câmeras</option>
+            </select>
+          </div>
+          <div class="box-select">
+            <label for="">Envie suas fotos</label>
+            <input type="file" class="select" multiple="multiple" />
+          </div>
+          <div class="box-select">
+            <button class="button">
+              Clique para adicionar um novo produto
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </body>
 </template>
 <script>
 import firebase from "firebase/compat/app";
-import "firebase/compat/firestore"
+import "firebase/compat/firestore";
+import "firebase/compat/database";
+
 export default {
-    data() {
-        return {
-            nome: "",
-            categoria: "",
-            preco: "",
-            descricao: "",
-        };
+  data() {
+    return {
+      nome: "",
+      categoria: "",
+      preco: "",
+      descricao: "",
+    };
+  },
+
+  methods: {
+    //enviar para o firebase
+    // adicionarProduto() {
+    //   const db = firebase.firestore()
+    //   db.collection("products")
+    //     .add({
+    //       nome: this.nome,
+    //       categoria: this.categoria,
+    //       preco: this.preco,
+    //       descricao: this.descricao,
+    //     })
+
+    //     .then(() => {
+    //       this.nome = "",
+    //         this.categoria = "",
+    //         this.preco = "",
+    //         this.descricao = ""
+
+    //       console.log("Produto adicionado com sucesso");
+    //       alert("Produto adicionado com sucesso")
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+
+    // },
+    adicionarProduto() {
+      const db = firebase.database();
+      db.ref("products")
+        .push({
+          nome: this.nome,
+          categoria: this.categoria,
+          preco: this.preco,
+          descricao: this.descricao,
+        })
+        .then(() => {
+          this.nome = "";
+          this.categoria = "";
+          this.preco = "";
+          this.descricao = "";
+          console.log("Produto adicionado com sucesso");
+          alert("Produto adicionado com sucesso");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
-    methods: {
-        adicionarProduto() {
-            const db = firebase.firestore()
 
-            db.collection("products")
-                .add({
-                    nome: this.nome,
-                    categoria: this.categoria,
-                    preco: this.preco,
-                    descricao: this.descricao,
-                })
-                .then(() => {
-                    this.nome = "",
-                        this.categoria = "",
-                        this.preco = "",
-                        this.descricao = "",
+    // async uploadImage(image) {
+    //     const imageName = `${Date.now()}-${image.name}`;
+    //     const imageRef = storage.ref(`images/${imageName}`);
+    //     await imageRef.put(image);
+    //     const imageUrl = await imageRef.getDownloadURL();
+    //     return imageUrl;
+    // },
+    // async submitForm(event) {
+    //     // Previne o envio do formulário
+    //     event.preventDefault();
 
-                        console.log("Produto adicionado com sucesso");
-                    alert("Produto adicionado com sucesso")
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        },
+    //     // Obtém a imagem do formulário
+    //     const image = event.target.image.files[0];
 
-        // async uploadImage(image) {
-        //     const imageName = `${Date.now()}-${image.name}`;
-        //     const imageRef = storage.ref(`images/${imageName}`);
-        //     await imageRef.put(image);
-        //     const imageUrl = await imageRef.getDownloadURL();
-        //     return imageUrl;
-        // },
-        // async submitForm(event) {
-        //     // Previne o envio do formulário
-        //     event.preventDefault();
+    //     // Envia a imagem para o Cloud Storage
+    //     const imageUrl = await this.uploadImage(image);
 
-        //     // Obtém a imagem do formulário
-        //     const image = event.target.image.files[0];
-
-        //     // Envia a imagem para o Cloud Storage
-        //     const imageUrl = await this.uploadImage(image);
-
-        //     // Adiciona a URL da imagem ao documento do Cloud Firestore
-        //     await firebase.firestore().collection('images').add({ imageUrl });
-        // }
-
-    },
+    //     // Adiciona a URL da imagem ao documento do Cloud Firestore
+    //     await firebase.firestore().collection('images').add({ imageUrl });
+    // }
+  },
 };
 </script>
 <style scoped>
 body {
-    background-color: #eaeded;
-    padding: 15px;
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  background-color: #eaeded;
+  padding: 15px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 main {
-    min-height: 90vh;
-    display: flex;
-    justify-content: center;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
 }
 
 #obs {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .box {
-    min-width: 800px;
-    height: 500px;
-    background-color: #fff;
+  min-width: 800px;
+  height: 500px;
+  background-color: #fff;
 
-    padding: 20px;
-    margin-top: 50px;
+  padding: 20px;
+  margin-top: 50px;
 }
 
 .button {
-    height: 40px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    background-image: linear-gradient(#2a4d7a, #2d4158);
+  height: 40px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  background-image: linear-gradient(#2a4d7a, #2d4158);
 
-    margin: 50px auto;
-    width: 220px;
-    font-size: 1rem;
+  margin: 50px auto;
+  width: 220px;
+  font-size: 1rem;
 }
 
 label {
-    font-size: 1.3rem;
-    color: #2a4d7a;
-    font-weight: bold;
+  font-size: 1.3rem;
+  color: #2a4d7a;
+  font-weight: bold;
 }
 
 .select {
-    height: 40px;
-    width: 350px;
+  height: 40px;
+  width: 350px;
 }
 
 #description {
-    height: 70px;
-    overflow: scroll;
+  height: 70px;
+  overflow: scroll;
 }
 
 .options {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .box-select {
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+  justify-content: space-between;
 }
 </style>
 

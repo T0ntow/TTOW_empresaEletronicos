@@ -1,4 +1,5 @@
 <template>
+
   <body id="inicio">
     <main>
       <div class="container-secoes">
@@ -18,26 +19,7 @@
           <img src="../assets/left-arrow.png" class="img-seta" alt="" />
         </button>
 
-        <div class="produtos" v-for="produto in produtos" :key="produto.id">
-          <span>
-            {{ produto.nome }}
-          </span>
-          <router-link to="/produto">
-            <img class="produto" src="../assets/controle.jpg" alt="" />
-          </router-link>
-        </div>
-        <!-- 
-                <div class="produtos">
-                    <router-link to="/produto">
-                        <img class="produto" src="../assets/controle.jpg" alt="" />
-                    </router-link>
-                </div> -->
-
-        <!-- <div class="produtos">
-                    <router-link to="/produto">
-                        <img class="produto" src="../assets/controle.jpg" alt="" />
-                    </router-link>
-                </div> -->
+        <ProdutosHome> </ProdutosHome>
 
         <button class="setas seta-direita" @click="scrollForward">
           <img src="../assets/right-arrow.png" alt="" class="img-seta" />
@@ -48,33 +30,9 @@
 </template>
 
 <script>
+import ProdutosHome from '../components/ProdutosHome.vue'
+
 export default {
-  data: () => {
-    return {
-      produtos: [
-        {
-          id: 1,
-          nome: 'teste1',
-          preco: '350',
-          categoria: 'acessorio',
-          descricao: 'alksdjalasd',
-          imagem: 'sdfposiop'
-        },
-        {
-          id: 2,
-          nome: 'teste2',
-          preco: '250',
-          categoria: 'acessorio2',
-          descricao: 'alksdjalasd',
-          imagem: 'sdfposiop'
-        }
-      ]
-    }
-  },
-  mounted() {
-    console.log('testeasdj');
-    console.log('DEBUG', this.produtos) // I'm text inside the component.
-  },
   methods: {
     scrollBack() {
       this.$refs.boxProdutos.scrollBy({ left: -300, behavior: "smooth" });
@@ -83,7 +41,12 @@ export default {
       this.$refs.boxProdutos.scrollBy({ left: 300, behavior: "smooth" });
     },
   },
+  components: {
+    ProdutosHome,
+  }
 };
+
+
 </script>
 
 <style scoped>
