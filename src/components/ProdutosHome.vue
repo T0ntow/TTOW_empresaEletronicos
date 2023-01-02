@@ -1,10 +1,9 @@
 <template>
   <div class="produtos" v-for="produto in produtos" :key="produto.id">
-    <router-link to="/produto">
+    <router-link :to="'/produto/' + produto.id">
       <img class="produto" src="../assets/controle.jpg" alt="" />
     </router-link>
   </div>
-
 </template>
 <script>
 import firebase from 'firebase/compat/app';
@@ -16,19 +15,22 @@ export default {
     produtos: []
   }),
   mounted() {
-  firebase.database().ref('products').on('value', snapshot => {
-    this.produtos = [];
-    snapshot.forEach(childSnapshot => {
-      const produto = {
-        nome: childSnapshot.val().nome,
-        preco: childSnapshot.val().preco,
-        descricao: childSnapshot.val().descricao,
-        categoria: childSnapshot.val().categoria
-      };
-      this.produtos.push(produto);
+    firebase.database().ref('products').on('value', snapshot => {
+      this.produtos = [];
+
+      snapshot.forEach(childSnapshot => {
+        const produto = {
+          id: childSnapshot.key, // inclui o ID do produto no objeto produto
+          nome: childSnapshot.val().nome,
+          preco: childSnapshot.val().preco,
+          descricao: childSnapshot.val().descricao,
+          categoria: childSnapshot.val().categoria
+        };
+        this.produtos.push(produto);
+        console.log("produto.id " + produto.id);
+      });
     });
-  });
-}
+  }
 };
 
 </script>

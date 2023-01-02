@@ -1,5 +1,4 @@
 <template>
-
   <body>
     <main id="inicio">
       <div class="box-produto">
@@ -56,9 +55,6 @@
 </template>
 
 <script>
-export default {
-    message: 'Hello Vue.js!'
-  }
 
 </script>
 

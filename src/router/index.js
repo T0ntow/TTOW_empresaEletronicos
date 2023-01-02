@@ -3,10 +3,11 @@ import Endereco from '../views/EnderecoPage.vue'
 import Home from '../views/HomePage.vue'
 import Login from '../views/LoginPage.vue'
 import Register from '../views/RegisterPage.vue'
-import Produto from '../views/ProdutoPage.vue'
 import Carrinho from '../views/CarrinhoPage.vue'
 import Compra from '../views/CompraPage.vue'
 import AdcProduto from '../views/adcProduto.vue'
+
+import ProdutoComponent from '../components/ProdutoComponent.vue'
 
 import firebase from 'firebase/compat/app'
 
@@ -35,14 +36,6 @@ const routes = [
     component: Register
   },
   {
-    path: '/produto',
-    name: 'produto',
-    component: Produto,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
     path: '/carrinho',
     name: 'carrinho',
     component: Carrinho,
@@ -62,6 +55,16 @@ const routes = [
     path: '/adcProduto',
     name: 'adcProduto',
     component: AdcProduto,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  //produto rotas 
+  {
+    path: '/produto/:id',
+    name: 'produto',
+    component: ProdutoComponent,
     meta: {
       requiresAuth: true
     }

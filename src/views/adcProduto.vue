@@ -1,4 +1,5 @@
 <template>
+
   <body>
     <main id="inicio">
       <form @submit.prevent="adicionarProduto">
@@ -14,24 +15,12 @@
           </div>
           <div class="box-select">
             <label for="">Descrição do produto</label>
-            <input
-              type="text"
-              class="select"
-              max="300"
-              id="description
-                       "
-              v-model="descricao"
-              required
-            />
+            <input type="text" class="select" max="300" id="description
+                       " v-model="descricao" required />
           </div>
           <div class="box-select">
             <label for="">Selecione a categoria do produto</label>
-            <select
-              name=""
-              class="select"
-              id="select-category"
-              v-model="categoria"
-            >
+            <select name="" class="select" id="select-category" v-model="categoria">
               <option class="options" value="Periféricos">Periféricos</option>
               <option class="options" value="Celulares">Celulares</option>
               <option class="options" value="Tv's">Tv's</option>
@@ -66,77 +55,37 @@ export default {
       categoria: "",
       preco: "",
       descricao: "",
+      produtos: [],
     };
   },
-
   methods: {
-    //enviar para o firebase
-    // adicionarProduto() {
-    //   const db = firebase.firestore()
-    //   db.collection("products")
-    //     .add({
-    //       nome: this.nome,
-    //       categoria: this.categoria,
-    //       preco: this.preco,
-    //       descricao: this.descricao,
-    //     })
-
-    //     .then(() => {
-    //       this.nome = "",
-    //         this.categoria = "",
-    //         this.preco = "",
-    //         this.descricao = ""
-
-    //       console.log("Produto adicionado com sucesso");
-    //       alert("Produto adicionado com sucesso")
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-
-    // },
     adicionarProduto() {
       const db = firebase.database();
-      db.ref("products")
-        .push({
-          nome: this.nome,
-          categoria: this.categoria,
-          preco: this.preco,
-          descricao: this.descricao,
-        })
-        .then(() => {
-          this.nome = "";
-          this.categoria = "";
-          this.preco = "";
-          this.descricao = "";
-          console.log("Produto adicionado com sucesso");
-          alert("Produto adicionado com sucesso");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
+      const id = db.ref("products").push({
+        nome: this.nome,
+        categoria: this.categoria,
+        preco: this.preco,
+        descricao: this.descricao,
+      });
 
-    // async uploadImage(image) {
-    //     const imageName = `${Date.now()}-${image.name}`;
-    //     const imageRef = storage.ref(`images/${imageName}`);
-    //     await imageRef.put(image);
-    //     const imageUrl = await imageRef.getDownloadURL();
-    //     return imageUrl;
-    // },
-    // async submitForm(event) {
-    //     // Previne o envio do formulário
-    //     event.preventDefault();
+      // cria um objeto produto com o ID gerado pelo firebase
+      const produto = {
+        id: id,
+        nome: this.nome,
+        categoria: this.categoria,
+        preco: this.preco,
+        descricao: this.descricao,
+      };
 
-    //     // Obtém a imagem do formulário
-    //     const image = event.target.image.files[0];
+      this.nome = "";
+      this.categoria = "";
+      this.preco = "";
+      this.descricao = "";
+      alert("Produto adicionado com sucesso");
+      console.log("id: " + id); // exibe o ID gerado pelo firebase no console
 
-    //     // Envia a imagem para o Cloud Storage
-    //     const imageUrl = await this.uploadImage(image);
-
-    //     // Adiciona a URL da imagem ao documento do Cloud Firestore
-    //     await firebase.firestore().collection('images').add({ imageUrl });
-    // }
+      this.produtos.push(produto);
+    }
   },
 };
 </script>
