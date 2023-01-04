@@ -16,7 +16,7 @@
     </div>
     <div class="nav-right">
       <p>Olá, {{ name }}</p>
-      <button @click="sair">Sair</button>
+      <button @click="sair"> Sair</button>
       <router-link to="/carrinho"> Carrinho </router-link>
     </div>
   </nav>
