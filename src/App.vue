@@ -9,14 +9,14 @@
 <script>
 import NavBar from './components/NavBar.vue'
 import FooterSite from './components/FooterSite.vue'
-
+  
 export default {
   name: 'App',
   components: {
+    FooterSite,
     NavBar,
-    FooterSite
-  }
-  
+  },
+
 }
 </script>
 

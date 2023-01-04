@@ -39,7 +39,8 @@ export default defineComponent({
             email: '',
             password: '',
             cep: '',
-            name: ''
+            name: '',
+            userName: ''
         };
     },
     methods: {
@@ -56,8 +57,8 @@ export default defineComponent({
                 const userName = this.name;
                 alert('Conta criada com sucesso seja bem vindo ' + this.name)
                 console.log("UserName: " + userName);
+
                 router.push('/home')
-                
             }
             catch (err) {
                 alert('Deu BO ae pai: ' + err.message)
@@ -66,8 +67,8 @@ export default defineComponent({
         },
 
     },
+
 });
-// export const userName = this.name;
 
 </script>
 

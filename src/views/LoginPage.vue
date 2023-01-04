@@ -41,8 +41,6 @@ export default defineComponent({
             } catch (err) {
                 alert('deu BO ae em:  ' + err.message)
             }
-
-           
         },
         register() {
             router.push('./register')

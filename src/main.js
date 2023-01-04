@@ -3,12 +3,9 @@ import App from './App.vue'
 import router from './router'
 import { getDatabase } from "firebase/database";
 
-createApp(App)
-.use(router)
-.mount('#app');
-
 import firebase from "firebase/compat/app";
 import "firebase/database";
+
 const firebaseConfig = {
     apiKey: "AIzaSyA1icqWsJBVND3y167GsGoFIVZEDMVnL2w",
     authDomain: "login-logout-daa1a.firebaseapp.com",
@@ -21,3 +18,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const database = getDatabase(app);
 export default database;
+
+createApp(App)
+.use(router)
+.mount('#app');

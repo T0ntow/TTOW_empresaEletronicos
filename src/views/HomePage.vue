@@ -1,7 +1,6 @@
 <template>
-
-  <body id="inicio">
-    <main>
+  <body>
+    <main id="inicio">
       <div class="container-secoes">
         <h2>Tem na TTOW</h2>
         <div id="secoes">
@@ -30,9 +29,14 @@
 </template>
 
 <script>
+import "firebase/compat/firestore"
 import ProdutosHome from '../components/ProdutosHome.vue'
-
 export default {
+  data() {
+    return {
+      name: '',
+    }
+  },
   methods: {
     scrollBack() {
       this.$refs.boxProdutos.scrollBy({ left: -900, behavior: "smooth" });
@@ -43,7 +47,7 @@ export default {
   },
   components: {
     ProdutosHome,
-  }
+}
 };
 
 

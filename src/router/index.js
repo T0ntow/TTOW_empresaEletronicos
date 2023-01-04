@@ -76,28 +76,50 @@ const router = createRouter({
   routes
 });
 
+// router.beforeEach((to, from, next) => {
+//   const currentUser = firebase.auth().currentUser;
+//   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+//   // Se o usuário não estiver logado, redireciona para a rota de login
+//   if (requiresAuth && !currentUser) {
+//     next('');
+//     return;
+//   }
+//     if (requiresAuth && currentUser) {
+//     next();
+//     return;
+//   }
+//   // // Se a rota atual não exigir autenticação e o usuário já estiver logado, redireciona para a rota home
+//   if (!requiresAuth && currentUser) {
+//     next('home');
+//     return;
+//   }
+
+//   // // Se nenhuma das condições acima for atendida, permite o acesso à rota
+//   next();
+// });
 router.beforeEach((to, from, next) => {
+  // Verifica se o usuário está autenticado
   const currentUser = firebase.auth().currentUser;
+  // Verifica se a rota atual exige autenticação
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  // Se o usuário não estiver logado, redireciona para a rota de login
+  // Se o usuário não estiver logado e a rota atual exigir autenticação, redireciona para a rota de login
   if (requiresAuth && !currentUser) {
-    next('');
-    return;
-  }
-    if (requiresAuth && currentUser) {
-    next();
+    next({ name: 'login' });
     return;
   }
 
-  // // Se a rota atual não exigir autenticação e o usuário já estiver logado, redireciona para a rota home
-  if (!requiresAuth && currentUser) {
-    next('home');
+  // Se o usuário estiver logado e a rota atual não exigir autenticação, redireciona para a rota home
+  if (currentUser && !requiresAuth) {
+    next({ name: 'home' });
     return;
   }
 
-  // // Se nenhuma das condições acima for atendida, permite o acesso à rota
+  // Se nenhuma das condições acima for atendida, permite o acesso à rota
   next();
 });
+
+
 
 export default router;

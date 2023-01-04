@@ -39,12 +39,10 @@
     </body>
 </template>
 
-
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/database";
-
 export default {
     name: "ProdutoComponent",
     data: () => ({
@@ -93,7 +91,6 @@ h3 {
     display: flex;
     justify-content: space-between;
 }
-
 .box-produto .box-bloco-imagem ul {
     width: 70px;
     max-height: 340px;
@@ -105,7 +102,6 @@ h3 {
     overflow: hidden;
     margin: 20px 5px;
 }
-
 .box-produto .box-bloco-imagem ul li img {
     height: 45px;
     width: 70px;
@@ -113,7 +109,6 @@ h3 {
 
     border: 1px solid black;
 }
-
 .imagem-focus {
     width: 350px;
     height: 350px;

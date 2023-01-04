@@ -1,5 +1,4 @@
 <template>
-
   <body>
     <main id="inicio">
       <form @submit.prevent="adicionarProduto">
@@ -47,6 +46,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/database";
+import router from "@/router";
 
 export default {
   data() {
@@ -55,7 +55,6 @@ export default {
       categoria: "",
       preco: "",
       descricao: "",
-      produtos: [],
     };
   },
   methods: {
@@ -74,8 +73,10 @@ export default {
             this.preco = "";
             this.descricao = "";
             alert("Produto adicionado com sucesso");
+            router.push("/home")
           })
           .catch((error) => {
+            alert("Deu BO ae: " + error)
             console.error(error);
           });
       },

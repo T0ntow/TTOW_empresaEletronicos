@@ -1,24 +1,23 @@
 <template>
   <nav id="nav-bar-principal" v-if="$route.path !== '/' && $route.path !== '/register'">
     <div class="nav-left">
+      <div class="menu"> <img src="../assets/menu.png" alt=""> </div>
       <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""></router-link>
       <router-link to="/adcProduto">
-        <p>+ Clique para adicinar um produto
-          e cresça conosco
+        <p>Adicionar Produto
         </p>
       </router-link>
     </div>
-
     <div class="nav-center">
       <input type="text" placeholder="Busque por um item" />
       <button class="search-button">
         <img src="../assets/search.svg" alt="" />
       </button>
     </div>
-
     <div class="nav-right">
+      <p>Olá, {{ name }}</p>
       <button @click="sair">Sair</button>
-      <router-link to="/carrinho" @click="created"> Carrinho </router-link>
+      <router-link to="/carrinho"> Carrinho </router-link>
     </div>
   </nav>
 </template>
@@ -26,26 +25,36 @@
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import "firebase/compat/firestore"
 import router from "@/router";
 
 export default {
   name: "navBar",
-
   data() {
     return {
-      
+      name: ''
     }
   },
+  mounted() {
+    const db = firebase.firestore()
+    firebase.auth().onAuthStateChanged(user => {
+      db.collection('users').doc(user.uid).get()
+        .then(doc => {
+          this.name = doc.data().name;
+          console.log("name: " + this.name)
+        });
+    });
+  },
   methods: {
-    sair: function () {
+    sair() {
       firebase.auth().signOut().then(() => {
-        // alert("conta deslogada")
         router.push('/')
       })
     },
     route() {
       return this.$route
     },
+   
   }
 }
 
@@ -75,20 +84,41 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 35vw;
+  max-width: 20vw;
+}
+
+.nav-left .menu {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.nav-left .menu img {
+  width: 40px;
+  height: 40px;
+
+  filter: brightness(1.5);
 }
 
 .nav-right {
   display: flex;
   justify-content: center;
+  max-width: 23vw;
+}
+.nav-right p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
 }
 
 .nav-center {
   height: 60px;
-  width: 40vw;
+  width: 50vw;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transform: translateX(5vw);
 }
 
 .nav-left a,
@@ -148,12 +178,13 @@ nav {
   border: none;
 
   height: 35px;
-  width: 100%;
+  width: 80%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
   text-indent: 5px;
   color: #000000;
+  font-size: 1rem;
 }
 
 .nav-center input:focus {
