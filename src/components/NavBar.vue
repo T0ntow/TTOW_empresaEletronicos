@@ -19,7 +19,16 @@
       <button @click="sair"> Sair</button>
       <router-link to="/carrinho"> Carrinho </router-link>
     </div>
+    <div class="nav-before">
+        <a class="item-nav">Periféricos</a>
+        <a class="item-nav">Celulares</a>
+        <a class="item-nav">Tv's</a>
+        <a class="item-nav">Computadores</a>
+        <a class="item-nav">Relógios</a>
+        <a class="item-nav">Câmeras</a>
+    </div>
   </nav>
+  
 </template>
   
 <script>
@@ -62,8 +71,8 @@ export default {
   
 <style scoped>
 * {
-  color: #ffff;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #ffff;
 }
 
 #logo-empresa {
@@ -75,9 +84,9 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #131921;
-
   height: 60px;
+
+  background-color: #131921;
 }
 
 .nav-left {
@@ -132,9 +141,9 @@ nav {
 
   position: inherit;
 
-  border: 1px solid #131921;
   background-color: transparent;
   text-decoration: underline;
+  border: 1px solid #131921;
 }
 
 .nav-right button {
@@ -147,25 +156,25 @@ nav {
 
   position: inherit;
 
-  border: 1px solid #131921;
+  border: 1px solid transparent;
   background-color: transparent;
   text-decoration: underline;
 }
 
 .nav-right button:hover {
   cursor: pointer;
-  background-color: #1c2635;
   border-radius: 7px;
-
+  
+  background-color: #1c2635;
   border: 1px solid white;
 }
 
 .nav-left a:hover,
 .nav-right a:hover {
   cursor: pointer;
-  background-color: #1c2635;
   border-radius: 7px;
-
+  
+  background-color: #1c2635;
   border: 1px solid white;
 }
 
@@ -196,14 +205,14 @@ nav {
   width: 50px;
   border: none;
 
-  background-color: #fd4141;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  background-color: #fd4141;
 }
 
 .search-button:hover {
-  background-color: #ff2424;
   cursor: pointer;
+  background-color: #ff2424;
 }
 
 .nav-right {
@@ -215,4 +224,35 @@ nav {
 
   position: static;
 }
+
+.nav-before{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+
+  text-transform: uppercase;
+
+  height: 35px;
+  width: 100%;
+  margin-top: 85px;
+  background-color: #232F3E;
+}
+.item-nav{
+  height: 25px;
+  padding: 0 30px;
+
+  font-size: 1.03rem;
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid transparent;
+}
+.item-nav:hover{
+  cursor: pointer;
+  border-radius: 7px;
+  
+  background-color: #1c2635;
+  border: 1px solid white;
+}
+
 </style>

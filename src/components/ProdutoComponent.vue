@@ -5,11 +5,11 @@
       <div class="box-produto">
         <div class="box-bloco-imagem">
           <ul class="barra-imagem">
-            <li><img src="../assets/controle.jpg" alt="" class="link-image"/></li>
-            <li><img src="../assets/controle2.jpg" alt="" class="link-image"/></li>
-            <li><img src="../assets/controle.jpg" alt="" class="link-image"/></li>
-            <li><img src="../assets/controle2.jpg" alt="" class="link-image"/></li>
-            <li><img src="../assets/controle.jpg" alt="" class="link-image"/></li>
+            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
+            <li><img src="../assets/controle2.jpg" alt="" class="link-image" /></li>
+            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
+            <li><img src="../assets/controle2.jpg" alt="" class="link-image" /></li>
+            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
           </ul>
           <div class="imagem-focus">
             <img src="../assets/controle.jpg" alt="" />
@@ -27,8 +27,9 @@
           </div>
           <div class="entrega"></div>
           <div class="box-adicionar-produto">
-            <router-link to="/carrinho" id="adc-produto">Adicionar ao carrinho</router-link>
-            <router-link to="/compra" id="comp-produto">Comprar produto</router-link>
+            <button id="comprar">
+              <img src="https://cdn-icons-png.flaticon.com/512/126/126510.png" alt="">
+              Comprar</button>
           </div>
         </div>
       </div>
@@ -121,6 +122,7 @@ h3 {
 .box-produto .box-bloco-imagem ul li {
   cursor: pointer;
 }
+
 .box-produto .box-bloco-imagem ul li img {
   height: 50px;
   width: 70px;
@@ -195,19 +197,29 @@ h3 {
   flex-direction: column;
 }
 
-.box-adicionar-produto a {
-  height: 30px;
-  margin-bottom: 10px;
+.box-adicionar-produto #comprar {
+  height: 35px;
   border: none;
-  border-radius: 5px;
+  width: 95%;
+  border-radius: 4px;
   cursor: pointer;
-  text-decoration: none;
-  color: #000;
+  font-weight: bolder;
+  font-size: small;
+
+  background-color: #5a6bff;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 25px;
 }
-
+#comprar:hover{
+  background-color: #478ae2;
+}
+#comprar img{
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
 .box-adicionar-produto a:hover {
   opacity: 0.9;
 }
@@ -227,5 +239,4 @@ h3 {
 .descrição-produto .descricao {
   padding: 15px;
 }
-
 </style>

@@ -45,7 +45,6 @@ export default defineComponent({
         register() {
             router.push('./register')
         },
-            
     },
 });
 

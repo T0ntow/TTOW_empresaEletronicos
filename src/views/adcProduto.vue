@@ -1,4 +1,5 @@
 <template>
+
   <body>
     <main id="inicio">
       <form @submit.prevent="adicionarProduto">
@@ -12,10 +13,15 @@
             <label for="">Selecione o preço</label>
             <input type="number" class="select" v-model="preco" required />
           </div>
+
           <div class="box-select">
             <label for="">Descrição do produto</label>
             <input type="text" class="select" max="300" id="description
-                       " v-model="descricao" required />
+            " v-model="descricao" required />
+          </div>
+          <div class="box-select">
+            <label for="">Quantidade de estoque</label>
+            <input type="number" class="select" v-model="estoque" required />
           </div>
           <div class="box-select">
             <label for="">Selecione a categoria do produto</label>
@@ -54,33 +60,36 @@ export default {
       nome: "",
       categoria: "",
       preco: "",
+      estoque: "",
       descricao: "",
     };
   },
   methods: {
     adicionarProduto() {
       const db = firebase.database();
-        db.ref("products")
-          .push({
-            nome: this.nome,
-            categoria: this.categoria,
-            preco: this.preco,
-            descricao: this.descricao,
-          })
-          .then(() => {
-            this.nome = "";
-            this.categoria = "";
-            this.preco = "";
-            this.descricao = "";
-            alert("Produto adicionado com sucesso");
-            router.push("/home")
-          })
-          .catch((error) => {
-            alert("Deu BO ae: " + error)
-            console.error(error);
-          });
-      },
-    }
+      db.ref("products")
+        .push({
+          nome: this.nome,
+          categoria: this.categoria,
+          preco: this.preco,
+          estoque: this.estoque,
+          descricao: this.descricao,
+        })
+        .then(() => {
+          this.nome = "";
+          this.categoria = "";
+          this.preco = "";
+          this.estoque = "";
+          this.descricao = "";
+          alert("Produto adicionado com sucesso");
+          router.push("/home")
+        })
+        .catch((error) => {
+          alert("Deu BO ae: " + error)
+          console.error(error);
+        });
+    },
+  }
 };
 </script>
 <style scoped>
