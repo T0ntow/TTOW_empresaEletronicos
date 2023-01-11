@@ -1,77 +1,97 @@
 <template>
-  <nav id="nav-bar-principal" v-if="$route.path !== '/' && $route.path !== '/register'">
-    <div class="nav-left">
-      <div class="menu"> <img src="../assets/menu.png" alt=""> </div>
-      <router-link class="logo" to="/home"><img id="logo-empresa" src="../assets/logotipo.png" alt=""></router-link>
-      <router-link to="/adcProduto">
-        <p>Adicionar Produto
-        </p>
-      </router-link>
+  <nav id="nav-bar-principal" v-if="$route.path !== '/login' && $route.path !== '/register'">
+    <div class="menu-hamburger">
+      <input class="checkbox" type="checkbox" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      
+      <div class="menu-items">
+        <li class="item-menu">
+          <router-link to="/adcProduto">
+            <p>Adicionar Produto</p>
+          </router-link>
+        </li>
+        <li class="item-menu">Teste2</li>
+        <li class="item-menu">Teste3</li>
+        <li class="item-menu">Teste4</li>
+        <li class="item-menu" @click="sair">Sair</li>
+      </div>
     </div>
-    <div class="nav-center">
-      <input type="text" placeholder="Busque por um item" />
-      <button class="search-button">
-        <img src="../assets/search.svg" alt="" />
-      </button>
+
+    <div class="nav-left">
+      <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt="" /></router-link>
+      <div class="search">
+        <input type="text" placeholder="Busque por um item" />
+        <button class="search-button">
+          <img src="../assets/search.svg" alt="" />
+        </button>
+      </div>
+
     </div>
     <div class="nav-right">
       <p>Olá, {{ name }}</p>
-      <button @click="sair"> Sair</button>
+      <button @click="sair">Sair</button>
       <router-link to="/carrinho"> Carrinho </router-link>
     </div>
     <div class="nav-before">
-        <a class="item-nav">Periféricos</a>
-        <a class="item-nav">Celulares</a>
-        <a class="item-nav">Tv's</a>
-        <a class="item-nav">Computadores</a>
-        <a class="item-nav">Relógios</a>
-        <a class="item-nav">Câmeras</a>
+      <a class="item-nav">Periféricos</a>
+      <a class="item-nav">Celulares</a>
+      <a class="item-nav">Tv's</a>
+      <a class="item-nav">Computadores</a>
+      <a class="item-nav">Relógios</a>
+      <a class="item-nav">Câmeras</a>
     </div>
   </nav>
-  
+
 </template>
   
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import "firebase/compat/firestore"
+import "firebase/compat/firestore";
 import router from "@/router";
 
 export default {
   name: "navBar",
   data() {
     return {
-      name: ''
-    }
+      name: "",
+    };
   },
   mounted() {
-    const db = firebase.firestore()
-    firebase.auth().onAuthStateChanged(user => {
-      db.collection('users').doc(user.uid).get()
-        .then(doc => {
+    const db = firebase.firestore();
+    firebase.auth().onAuthStateChanged((user) => {
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
           this.name = doc.data().name;
-          console.log("name: " + this.name)
+          console.log("name: " + this.name);
         });
     });
   },
   methods: {
     sair() {
-      firebase.auth().signOut().then(() => {
-        router.push('/')
-      })
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          router.push("/login");
+        });
     },
     route() {
-      return this.$route
+      return this.$route;
     },
-   
-  }
-}
-
+  },
+};
 </script>
   
 <style scoped>
 * {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: #ffff;
 }
 
@@ -82,52 +102,122 @@ export default {
 
 nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 8vh;
 
   background-color: #131921;
 }
 
+.checkbox {
+  position: absolute;
+  display: block;
+  height: 32px;
+  width: 32px;
+  top: 20px;
+  left: 20px;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 120;
+  margin-left: 20px;
+}
+
+.hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #27cdff;
+}
+
+.hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+
 .nav-left {
   display: flex;
+  width: 100%;
+  margin-left: 100px;
+}
+
+.menu-items {
+  display: flex;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  max-width: 20vw;
+  justify-content: flex-start;
+  z-index: 100;
+  width: 28%;
+  top: 8%;
+  height: 100%;
+
+  box-shadow: inset 0 0 2000px #27384d;
+  background-color: #131921;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(-120%);
 }
 
-.nav-left .menu {
-  padding: 20px;
-  cursor: pointer;
+.menu-items li {
+  font-size: 2rem;
+  font-weight: 500;
+  color: black;
+  list-style: none;
+  margin-bottom: 5vh;
 }
 
-.nav-left .menu img {
-  width: 40px;
-  height: 40px;
+input[type="checkbox"]:checked~.menu-items {
+  transform: translateX(0%);
+}
 
-  filter: brightness(1.5);
+input[type="checkbox"]:checked~.hamburger-lines .line1 {
+  transform: rotate(45deg);
+}
+
+input[type="checkbox"]:checked~.hamburger-lines .line2 {
+  transform: scaleY(0);
+}
+
+input[type="checkbox"]:checked~.hamburger-lines .line3 {
+  transform: rotate(-45deg);
 }
 
 .nav-right {
   display: flex;
   justify-content: center;
-  max-width: 23vw;
+  max-width: 30vw;
 }
-.nav-right p{
+
+.nav-right p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 50%;
-}
-
-.nav-center {
-  height: 60px;
-  width: 50vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  transform: translateX(5vw);
 }
 
 .nav-left a,
@@ -164,7 +254,7 @@ nav {
 .nav-right button:hover {
   cursor: pointer;
   border-radius: 7px;
-  
+
   background-color: #1c2635;
   border: 1px solid white;
 }
@@ -173,21 +263,21 @@ nav {
 .nav-right a:hover {
   cursor: pointer;
   border-radius: 7px;
-  
+
   background-color: #1c2635;
   border: 1px solid white;
 }
 
-.nav-center:focus {
+.nav-left:focus {
   border: 2px solid #001aff;
 }
 
-.nav-center input {
+.nav-left .search input {
   outline: none;
   border: none;
 
   height: 35px;
-  width: 80%;
+  width: 65%;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
@@ -196,11 +286,18 @@ nav {
   font-size: 1rem;
 }
 
-.nav-center input:focus {
+.search input:focus {
   border: 2px solid #fd4141;
 }
 
-.search-button {
+.search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search .search-button {
   height: 35px;
   width: 50px;
   border: none;
@@ -210,7 +307,7 @@ nav {
   background-color: #fd4141;
 }
 
-.search-button:hover {
+.search .search-button:hover {
   cursor: pointer;
   background-color: #ff2424;
 }
@@ -225,7 +322,7 @@ nav {
   position: static;
 }
 
-.nav-before{
+.nav-before {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -236,9 +333,10 @@ nav {
   height: 35px;
   width: 100%;
   margin-top: 85px;
-  background-color: #232F3E;
+  background-color: #232f3e;
 }
-.item-nav{
+
+.item-nav {
   height: 25px;
   padding: 0 30px;
 
@@ -247,12 +345,12 @@ nav {
   font-weight: bold;
   border: 1px solid transparent;
 }
-.item-nav:hover{
+
+.item-nav:hover {
   cursor: pointer;
   border-radius: 7px;
-  
+
   background-color: #1c2635;
   border: 1px solid white;
 }
-
 </style>

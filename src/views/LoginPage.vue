@@ -36,8 +36,7 @@ export default defineComponent({
         async submitForm() {
             try {
                 await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-                // alert('Seja bem vindo ' + this.email)
-                router.push('/home')
+                router.push('/')
             } catch (err) {
                 alert('deu BO ae em:  ' + err.message)
             }
@@ -47,6 +46,11 @@ export default defineComponent({
         },
     },
 });
+    // firebase.auth().onAuthStateChanged(function (user) {
+    //     if (user) {
+    //         router.push('./home')
+    //     }
+    // })
 
 </script>
 <style scoped>
