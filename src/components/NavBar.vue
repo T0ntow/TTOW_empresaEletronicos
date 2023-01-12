@@ -7,7 +7,7 @@
         <span class="line line2"></span>
         <span class="line line3"></span>
       </div>
-      
+
       <div class="menu-items">
         <li class="item-menu">
           <router-link to="/adcProduto">
@@ -20,12 +20,22 @@
         <li class="item-menu" @click="sair">Sair</li>
       </div>
     </div>
-
     <div class="nav-left">
       <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt="" /></router-link>
+      <router-link to="/adcProduto">
+        <p>Adicionar Produto</p>
+      </router-link>
       <div class="search">
-        <input type="text" placeholder="Busque por um item" />
-        <button class="search-button">
+        <input type="text" v-model="busca" placeholder="Busque por um item" />
+        <div class="containerResult">
+          <div v-for="produto in searchResults" v-bind:key="produto.id">
+            <router-link :to="{ name: 'produto', params: { id: produto.id } }" class="result">
+              {{ produto.item }}
+            </router-link>
+          </div>
+
+        </div>
+        <button class="search-button" @click="search">
           <img src="../assets/search.svg" alt="" />
         </button>
       </div>
@@ -59,9 +69,13 @@ export default {
   data() {
     return {
       name: "",
+      busca: "",
+      produtos: [],
+      searchResults: []
     };
   },
   mounted() {
+    //nome na nav-bar
     const db = firebase.firestore();
     firebase.auth().onAuthStateChanged((user) => {
       db.collection("users")
@@ -86,6 +100,7 @@ export default {
       return this.$route;
     },
   },
+
 };
 </script>
   
@@ -161,7 +176,7 @@ nav {
 
 .nav-left {
   display: flex;
-  width: 100%;
+  width: 100vw;
   margin-left: 100px;
 }
 
@@ -277,13 +292,14 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
   border: none;
 
   height: 35px;
-  width: 65%;
+  min-width: 35vw;
+
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 
   text-indent: 5px;
   color: #000000;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .search input:focus {
@@ -291,15 +307,14 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 }
 
 .search {
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
 }
 
 .search .search-button {
   height: 35px;
-  width: 50px;
+  width: 5vw;
   border: none;
 
   border-top-right-radius: 5px;
@@ -310,6 +325,29 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 .search .search-button:hover {
   cursor: pointer;
   background-color: #ff2424;
+}
+
+.containerResult {
+  max-height: 30vh;
+  width: 500px;
+  background-color: #c02727;
+
+  position: absolute;
+}
+
+.result {
+  position: absolute;
+  transform: translateY(20px);
+  z-index: 100;
+  min-width: 40vw;
+  text-align: left;
+  font-size: 1.1rem;
+  background-color: #fff;
+
+  text-indent: 5px;
+  color: #000000;
+  font-size: 1.1rem;
+  text-decoration: none;
 }
 
 .nav-right {

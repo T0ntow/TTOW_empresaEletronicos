@@ -54,18 +54,16 @@ export default {
     produto: {}
   }),
   mounted() {
+    const db = firebase.firestore();
     const id = this.$route.params.id;
-    // busca os detalhes do produto no database usando o ID do produto
-    firebase.database().ref("products/" + id).on("value", snapshot => {
-      if (snapshot.val() === null) {
+    db.collection('products').doc(id).onSnapshot((doc) => {
+      if (!doc.exists) {
         this.$router.push("/produtos");
         alert("Pagina não encontrada")
       } else {
-        // se o snapshot não for nulo, atribui os detalhes do produto ao objeto produto
-        this.produto = snapshot.val();
+        this.produto = doc.data();
       }
     });
-
     const liElements = document.querySelectorAll('.link-image');
     liElements.forEach(img => {
       img.addEventListener('mouseover', changeImage);
@@ -212,14 +210,17 @@ h3 {
   justify-content: center;
   margin-top: 25px;
 }
-#comprar:hover{
+
+#comprar:hover {
   background-color: #478ae2;
 }
-#comprar img{
+
+#comprar img {
   height: 25px;
   width: 25px;
   margin-right: 10px;
 }
+
 .box-adicionar-produto a:hover {
   opacity: 0.9;
 }

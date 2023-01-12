@@ -65,29 +65,27 @@ export default {
     };
   },
   methods: {
-    adicionarProduto() {
-      const db = firebase.database();
-      db.ref("products")
-        .push({
+    async adicionarProduto() {
+      const db = firebase.firestore();
+      try {
+        await db.collection("products").add({
           nome: this.nome,
           categoria: this.categoria,
           preco: this.preco,
           estoque: this.estoque,
           descricao: this.descricao,
-        })
-        .then(() => {
-          this.nome = "";
-          this.categoria = "";
-          this.preco = "";
-          this.estoque = "";
-          this.descricao = "";
-          alert("Produto adicionado com sucesso");
-          router.push("/home")
-        })
-        .catch((error) => {
-          alert("Deu BO ae: " + error)
-          console.error(error);
         });
+        this.nome = "";
+        this.categoria = "";
+        this.preco = "";
+        this.estoque = "";
+        this.descricao = "";
+        alert("Produto adicionado com sucesso");
+        router.push("/home")
+      } catch (error) {
+        alert("Deu BO ae: " + error)
+        console.error(error);
+      }
     },
   }
 };

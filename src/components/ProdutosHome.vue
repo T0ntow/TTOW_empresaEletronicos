@@ -28,21 +28,20 @@ export default {
     produtos: []
   }),
   mounted() {
-    firebase.database().ref('products').on('value', snapshot => {
+    const db = firebase.firestore();
+    db.collection('products').onSnapshot((snapshot) => {
       this.produtos = [];
-
-      snapshot.forEach(childSnapshot => {
+      snapshot.forEach((doc) => {
         const produto = {
-          id: childSnapshot.key, // inclui o ID do produto no objeto produto
-          nome: childSnapshot.val().nome,
-          preco: childSnapshot.val().preco,
-          descricao: childSnapshot.val().descricao,
-          estoque: childSnapshot.val().estoque,
-          categoria: childSnapshot.val().categoria
+          id: doc.id, // inclui o ID do produto no objeto produto
+          nome: doc.data().nome,
+          preco: doc.data().preco,
+          descricao: doc.data().descricao,
+          estoque: doc.data().estoque,
+          categoria: doc.data().categoria
         };
         this.produtos.push(produto);
       });
-
     });
   }
 };
