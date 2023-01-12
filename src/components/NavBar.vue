@@ -69,9 +69,6 @@ export default {
   data() {
     return {
       name: "",
-      busca: "",
-      produtos: [],
-      searchResults: []
     };
   },
   mounted() {
