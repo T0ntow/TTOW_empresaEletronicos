@@ -10,7 +10,7 @@
 
       <div class="menu-items">
         <li class="item-menu">
-          <router-link to="/adcProduto">
+          <router-link to="/adcProduto" class="link">
             <p>Adicionar Produto</p>
           </router-link>
         </li>
@@ -21,21 +21,20 @@
       </div>
     </div>
     <div class="nav-left">
-      <router-link class="logo" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt="" /></router-link>
-      <router-link to="/adcProduto">
+      <router-link class="logo link" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt="" /></router-link>
+      <router-link to="/adcProduto" class="link">
         <p>Adicionar Produto</p>
       </router-link>
       <div class="search">
-        <input type="text" v-model="busca" placeholder="Busque por um item" />
-        <div class="containerResult">
-          <div v-for="produto in searchResults" v-bind:key="produto.id">
-            <router-link :to="{ name: 'produto', params: { id: produto.id } }" class="result">
-              {{ produto.item }}
-            </router-link>
+        <input type="text" v-model="search" placeholder="Busque por um item" />
+        
+        <div class="containerResult" v-if="filteredProducts.length !== 0">
+          <div v-for="product in filteredProducts" :key="product.id">
+            <router-link :to="`/produto/${product.item.id}`" class="result">{{ product.item.nome }}</router-link>
           </div>
-
         </div>
-        <button class="search-button" @click="search">
+
+        <button class="search-button" @click="pesquisar">
           <img src="../assets/search.svg" alt="" />
         </button>
       </div>
@@ -44,7 +43,7 @@
     <div class="nav-right">
       <p>Olá, {{ name }}</p>
       <button @click="sair">Sair</button>
-      <router-link to="/carrinho"> Carrinho </router-link>
+      <router-link to="/carrinho" class="link"> Carrinho </router-link>
     </div>
     <div class="nav-before">
       <a class="item-nav">Periféricos</a>
@@ -64,12 +63,30 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import router from "@/router";
 
+import Fuse from 'fuse.js';
+
 export default {
   name: "navBar",
   data() {
     return {
       name: "",
+      search: '',
+      products: []
     };
+  },
+  created() {
+    // Get products from Firebase
+    const db = firebase.firestore();
+    db.collection('products').onSnapshot(snapshot => {
+      this.products = [];
+      snapshot.forEach(doc => {
+        this.products.push({ id: doc.id, ...doc.data() });
+      });
+      // Create Fuse instance
+      this.fuse = new Fuse(this.products, {
+        keys: ['nome'],
+      });
+    });
   },
   mounted() {
     //nome na nav-bar
@@ -97,7 +114,14 @@ export default {
       return this.$route;
     },
   },
-
+  computed: {
+    filteredProducts() {
+      if (!this.search) {
+        return [];
+      }
+      return this.fuse.search(this.search);
+    },
+  },
 };
 </script>
   
@@ -232,8 +256,8 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
   max-width: 50%;
 }
 
-.nav-left a,
-.nav-right a {
+.nav-left .link,
+.nav-right .link {
   font-size: 1rem;
   height: 45px;
   display: flex;
@@ -271,8 +295,8 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
   border: 1px solid white;
 }
 
-.nav-left a:hover,
-.nav-right a:hover {
+.nav-left .link:hover,
+.nav-right .link:hover {
   cursor: pointer;
   border-radius: 7px;
 
@@ -340,11 +364,16 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
   text-align: left;
   font-size: 1.1rem;
   background-color: #fff;
+  list-style: none;
 
   text-indent: 5px;
   color: #000000;
   font-size: 1.1rem;
   text-decoration: none;
+}
+
+.result:hover{
+  background-color: none;
 }
 
 .nav-right {
