@@ -9,12 +9,19 @@
       </div>
 
       <div class="menu-items">
+        <li class="item-menu name-menu" v-if="loggedIn">Olá, {{ name }}</li>
+        <li class="item-menu name-menu" v-else>
+          <router-link to="/login"> Olá, Faça seu login</router-link>
+        </li>
+        <li class="item-menu">Meus dados</li>
         <li class="item-menu">
-          <router-link to="/adcProduto" class="link">
-            <p>Adicionar Produto</p>
+          <router-link to="/adcProduto" class="item-menu">
+            Adicionar Produto
           </router-link>
         </li>
-        <li class="item-menu">Teste2</li>
+        <li class="item-menu"> <router-link to="/carrinho" class="item-menu">
+            Carrinho
+          </router-link></li>
         <li class="item-menu">Teste3</li>
         <li class="item-menu">Teste4</li>
         <li class="item-menu" @click="sair">Sair</li>
@@ -27,7 +34,7 @@
       </router-link>
       <div class="search">
         <input type="text" v-model="search" placeholder="Busque por um item" />
-        
+
         <div class="containerResult" v-if="filteredProducts.length !== 0">
           <div v-for="product in filteredProducts" :key="product.id">
             <router-link :to="`/produto/${product.item.id}`" class="result">{{ product.item.nome }}</router-link>
@@ -41,7 +48,8 @@
 
     </div>
     <div class="nav-right">
-      <p>Olá, {{ name }}</p>
+      <p v-if="loggedIn">Olá, {{ name }}</p>
+      <router-link to="/login" v-else> Olá, Faça seu login</router-link>
       <button @click="sair">Sair</button>
       <router-link to="/carrinho" class="link"> Carrinho </router-link>
     </div>
@@ -71,7 +79,8 @@ export default {
     return {
       name: "",
       search: '',
-      products: []
+      products: [],
+      loggedIn: ''
     };
   },
   created() {
@@ -88,6 +97,7 @@ export default {
       });
     });
   },
+
   mounted() {
     //nome na nav-bar
     const db = firebase.firestore();
@@ -99,6 +109,13 @@ export default {
           this.name = doc.data().name;
           console.log("name: " + this.name);
         });
+
+      if (user) {
+        this.loggedIn = true;
+      }
+      else {
+        this.loggedIn = false;
+      }
     });
   },
   methods: {
@@ -108,6 +125,7 @@ export default {
         .signOut()
         .then(() => {
           router.push("/login");
+          this.$forceUpdate()
         });
     },
     route() {
@@ -177,7 +195,7 @@ nav {
   height: 4px;
   width: 100%;
   border-radius: 10px;
-  background: #27cdff;
+  background: #479ffc;
 }
 
 .hamburger-lines .line1 {
@@ -197,7 +215,7 @@ nav {
 
 .nav-left {
   display: flex;
-  width: 100vw;
+  width: 65%;
   margin-left: 100px;
 }
 
@@ -209,7 +227,7 @@ nav {
   align-items: center;
   justify-content: flex-start;
   z-index: 100;
-  width: 28%;
+  width: 20%;
   top: 8%;
   height: 100%;
 
@@ -219,12 +237,28 @@ nav {
   transform: translateX(-120%);
 }
 
-.menu-items li {
-  font-size: 2rem;
+.menu-items .item-menu {
+  font-size: 1.3rem;
   font-weight: 500;
-  color: black;
   list-style: none;
   margin-bottom: 5vh;
+  text-decoration: none;
+  cursor: pointer;
+  color: #fff;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+.menu-items .name-menu{
+  font-size: 1.5rem;
+  color: rgb(166, 166, 166);
+  margin-top: 3vh;
+  margin-bottom: 8vh;
+}
+.menu-items .item-menu:hover {
+  color: #479ffc;
 }
 
 input[type="checkbox"]:checked~.menu-items {
@@ -246,7 +280,8 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 .nav-right {
   display: flex;
   justify-content: center;
-  max-width: 30vw;
+  width: 25%;
+  margin-left: 50px;
 }
 
 .nav-right p {
@@ -372,7 +407,7 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
   text-decoration: none;
 }
 
-.result:hover{
+.result:hover {
   background-color: none;
 }
 

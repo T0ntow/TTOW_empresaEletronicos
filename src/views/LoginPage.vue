@@ -1,6 +1,8 @@
 <template>
     <main id="inicio">
-        <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
+        <router-link to="/">
+            <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
+        </router-link>
         <div class="register-page">
             <form @submit.prevent="submitForm">
                 <h1>Entrar na conta</h1>

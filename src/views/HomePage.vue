@@ -29,12 +29,12 @@ export default {
   },
   methods: {
     scrollBack() {
-      this.$refs.boxProdutos.scrollBy({ left: -900, behavior: "smooth" });
+      this.$refs.boxProdutos.scrollBy({ left: -600, behavior: 'smooth' });
     },
     scrollForward() {
-      this.$refs.boxProdutos.scrollBy({ left: 900, behavior: "smooth" });
+      this.$refs.boxProdutos.scrollBy({ left: 600, behavior: 'smooth'});
     },
-  },
+  },  
   components: {
     ProdutosHome,
   }
@@ -56,9 +56,11 @@ body {
 .box-produtos {
   display: flex;
   flex-direction: row;
-  overflow: scroll;
-  overflow-y: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
   margin: auto;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .produtos {
@@ -78,6 +80,8 @@ body {
 }
 
 .setas {
+  display: inline;
+  position: absolute;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -92,15 +96,13 @@ body {
   min-width: 40px;
   height: 120px;
 
-  position: absolute;
-  transform: translate(15px, 80px);
+  left: 2%;
 }
 
 .seta-direita {
   min-width: 40px;
   height: 120px;
-  position: absolute;
-  transform: translate(93vw, 80px);
+  right: 2%;
 }
 
 .img-seta {

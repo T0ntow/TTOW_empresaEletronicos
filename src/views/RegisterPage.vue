@@ -1,6 +1,8 @@
 <template>
     <main id="inicio">
-        <img src="../assets/logotipo.png" alt="" id="logo-empresa">
+        <router-link to="/">
+            <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
+        </router-link>
         <div class="register-page">
             <form @submit.prevent="submitForm">
                 <h1>Criar a conta</h1>
@@ -58,7 +60,7 @@ export default defineComponent({
                 alert('Conta criada com sucesso seja bem vindo ' + this.name)
                 console.log("UserName: " + userName);
 
-                router.push('/home')
+                router.push('/')
             }
             catch (err) {
                 alert('Deu BO ae pai: ' + err.message)
