@@ -36,10 +36,23 @@
           </div>
           <div class="box-select">
             <label for="">Envie suas fotos</label>
-            <input type="file" class="select" multiple="multiple" />
+            <input type="file" class="select" ref="inputFile" multiple="multiple" required accept="image/*"
+              @change="handleFile($event)" />
+
+            <button @click="openFileDialog" class="buttonFile">Enviar arquivos</button>
           </div>
-          <div class="box-select">
-            <button class="button">
+
+          <div class="box-files" v-if="files.length > 0">
+            <div v-for="file in files" :key="file.name" class="files">
+              <p>{{ file.name }}</p>
+              <button type="button" class="button-delete-file" @click="deleteFile(file)">
+                <img class="img-delete-file" src="https://cdn-icons-png.flaticon.com/512/54/54324.png" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="box-button-submit">
+            <button class="button-submit">
               Clique para adicionar um novo produto
             </button>
           </div>
@@ -47,11 +60,10 @@
       </form>
     </main>
   </body>
-</template>
+</template> 
 <script>
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
-import "firebase/compat/database";
 import router from "@/router";
 
 export default {
@@ -62,9 +74,21 @@ export default {
       preco: "",
       estoque: "",
       descricao: "",
+      files: []
     };
   },
   methods: {
+    openFileDialog() {
+      this.$refs.inputFile.click()
+    },
+
+    handleFile(event) {
+      this.files = Array.from(event.target.files)
+    },
+    deleteFile(file) {
+      this.files = this.files.filter(f => f !== file)
+    },
+
     async adicionarProduto() {
       const db = firebase.firestore();
       try {
@@ -80,6 +104,7 @@ export default {
         this.preco = "";
         this.estoque = "";
         this.descricao = "";
+
         alert("Produto adicionado com sucesso");
         router.push("/home")
       } catch (error) {
@@ -109,14 +134,21 @@ main {
 
 .box {
   min-width: 800px;
-  height: 500px;
+  height: 610px;
   background-color: #fff;
 
   padding: 20px;
   margin-top: 50px;
 }
 
-.button {
+.box-button-submit {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 150px;
+}
+
+.button-submit {
   height: 40px;
   cursor: pointer;
   border: none;
@@ -124,8 +156,7 @@ main {
   color: #fff;
   background-image: linear-gradient(#2a4d7a, #2d4158);
 
-  margin: 50px auto;
-  width: 220px;
+  width: 300px;
   font-size: 1rem;
 }
 
@@ -149,11 +180,47 @@ label {
   font-size: 1rem;
 }
 
+.buttonFile {
+  width: 33%;
+}
+
+input[type="file"] {
+  display: none;
+}
+
 .box-select {
   display: flex;
   flex-direction: row;
   margin: 20px 0;
   justify-content: space-between;
+}
+
+.box-files {
+  float: right;
+  width: 33%;
+
+  max-height: 100px;
+  overflow: scroll;
+}
+
+.box-files .files {
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.box-files .files p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.button-delete-file {}
+
+.img-delete-file {
+  width: 17px;
+  height: 17px;
 }
 </style>
 

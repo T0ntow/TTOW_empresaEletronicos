@@ -24,7 +24,11 @@
           </router-link></li>
         <li class="item-menu">Teste3</li>
         <li class="item-menu">Teste4</li>
-        <li class="item-menu" @click="sair">Sair</li>
+        <li class="item-menu sair-menu" v-if="loggedIn" @click="sair">Sair</li>
+        <div v-else> 
+          <li class="item-menu login-menu"> <router-link to="/login">Login</router-link></li>
+          <li class="item-menu cadastro-menu"> <router-link to="/cadastro">Cadastro</router-link></li>
+        </div>
       </div>
     </div>
     <div class="nav-left">
@@ -51,7 +55,6 @@
       <p v-if="loggedIn">Olá, {{ name }}</p>
       <router-link to="/login" v-else> Olá, Faça seu login</router-link>
       <button @click="sair">Sair</button>
-      <router-link to="/carrinho" class="link"> Carrinho </router-link>
     </div>
     <div class="nav-before">
       <a class="item-nav">Periféricos</a>
@@ -102,7 +105,7 @@ export default {
     //nome na nav-bar
     const db = firebase.firestore();
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection("users")
+        db.collection("users")
         .doc(user.uid)
         .get()
         .then((doc) => {
@@ -154,9 +157,10 @@ export default {
   height: 60px;
 }
 
-nav {
+#nav-bar-principal {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 8vh;
 
   background-color: #131921;
@@ -215,8 +219,6 @@ nav {
 
 .nav-left {
   display: flex;
-  width: 65%;
-  margin-left: 100px;
 }
 
 .menu-items {
@@ -225,12 +227,11 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  margin: 0px auto;
   z-index: 100;
-  width: 20%;
+  width: 25%;
   top: 8%;
   height: 100%;
-
   box-shadow: inset 0 0 2000px #27384d;
   background-color: #131921;
   transition: transform 0.5s ease-in-out;
@@ -238,7 +239,7 @@ nav {
 }
 
 .menu-items .item-menu {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 500;
   list-style: none;
   margin-bottom: 5vh;
@@ -246,16 +247,42 @@ nav {
   cursor: pointer;
   color: #fff;
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 95%;
+
 }
 .menu-items .name-menu{
   font-size: 1.5rem;
   color: rgb(166, 166, 166);
   margin-top: 3vh;
   margin-bottom: 8vh;
+}
+
+.menu-items .sair-menu{
+  position: absolute;
+  bottom: 10%;
+  font-size: 1.3rem;
+  border-radius: 4px;
+  padding: 15px 40px;
+  background-color: #c02727;
+}
+.menu-items div{
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.menu-items .login-menu{
+  font-size: 1.3rem;
+  background-color: #c07627;
+  border-radius: 4px;
+  padding: 15px 40px;
+}
+.menu-items .cadastro-menu{
+  font-size: 1.3rem;
+  background-color: #4b4b4b;
+  border-radius: 4px;
+  padding: 15px 40px;
 }
 .menu-items .item-menu:hover {
   color: #479ffc;
@@ -279,9 +306,9 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 
 .nav-right {
   display: flex;
-  justify-content: center;
-  width: 25%;
-  margin-left: 50px;
+  justify-content: space-evenly;
+  width: 20%;
+  align-items: center;
 }
 
 .nav-right p {
@@ -409,16 +436,6 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 
 .result:hover {
   background-color: none;
-}
-
-.nav-right {
-  height: 60px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  position: static;
 }
 
 .nav-before {
