@@ -4,16 +4,19 @@
     <main id="inicio">
       <div class="box-produto">
         <div class="box-bloco-imagem">
+
           <ul class="barra-imagem">
-            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
-            <li><img src="../assets/controle2.jpg" alt="" class="link-image" /></li>
-            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
-            <li><img src="../assets/controle2.jpg" alt="" class="link-image" /></li>
-            <li><img src="../assets/controle.jpg" alt="" class="link-image" /></li>
+            <li v-for="(url, index) in produto.fileUrl" :key="index">
+              <img v-if="url" class="link-image" :src="url" @error="imageError" alt=""
+                :class="{ active: index === activeIndex }" @mouseover="changeFocusImage(url, index)" />
+              <p v-else>Imagem não disponível</p>
+            </li>
           </ul>
-          <div class="imagem-focus">
-            <img src="../assets/controle.jpg" alt="" />
+
+          <div class="imagem-focus" ref="focusImage">
+            <img :src="focusSrc" alt="" />
           </div>
+
         </div>
         <div class="titulo-produto">
           <h1>
@@ -48,10 +51,14 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/database";
+import { ref } from 'vue';
+
 export default {
   name: "ProdutoComponent",
   data: () => ({
-    produto: {}
+    produto: {},
+    ref: '',
+    activeIndex: 0,
   }),
   mounted() {
     const db = firebase.firestore();
@@ -62,16 +69,24 @@ export default {
         alert("Pagina não encontrada")
       } else {
         this.produto = doc.data();
+        if (this.produto.fileUrl.length > 0) {
+          this.changeFocusImage(this.produto.fileUrl[0], 0);
+        }
       }
     });
-    const liElements = document.querySelectorAll('.link-image');
-    liElements.forEach(img => {
-      img.addEventListener('mouseover', changeImage);
-    });
-    function changeImage(event) {
-      const clickedImage = event.target;
-      const focusImage = document.querySelector('.imagem-focus img');
-      focusImage.src = clickedImage.src;
+  },
+  methods: {
+    changeFocusImage(src, index) {
+      this.activeIndex = index;
+      this.focusSrc = src;
+    }
+  },
+  setup() {
+    const focusSrc = ref('');
+    const focusImage = ref(null);
+    return {
+      focusSrc,
+      focusImage
     }
   },
 }

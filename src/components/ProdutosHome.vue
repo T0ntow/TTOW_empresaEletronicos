@@ -8,7 +8,7 @@
         <span id="estoque-vazio" v-else>Produto sem estoque</span>
       </div>
 
-      <img class="produto-image" src="../assets/controle.jpg" alt="" />
+      <img class="produto-image" :src="produto.fileUrl[0]" @error="imageError" alt="" />
       <h2 id="name">{{ produto.nome }}</h2>
       <h2 id="price"> R$ {{ produto.preco }} </h2>
 
@@ -25,8 +25,10 @@ import 'firebase/database';
 export default {
   name: "ProdutoHome",
   data: () => ({
-    produtos: []
+    produtos: [],
+    firstItem: ''
   }),
+   
   mounted() {
     const db = firebase.firestore();
     db.collection('products').onSnapshot((snapshot) => {
@@ -38,7 +40,8 @@ export default {
           preco: doc.data().preco,
           descricao: doc.data().descricao,
           estoque: doc.data().estoque,
-          categoria: doc.data().categoria
+          categoria: doc.data().categoria,
+          fileUrl: doc.data().fileUrl
         };
         this.produtos.push(produto);
       });
