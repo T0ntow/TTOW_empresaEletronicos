@@ -36,7 +36,7 @@
           </div>
           <div class="box-select">
             <label for="">Envie suas fotos</label>
-            <input type="file" class="select" ref="inputFile" multiple="multiple" required accept="image/*"
+            <input type="file" class="select" ref="inputFile" multiple="multiple" accept="image/*" required
               @change="handleFile($event)" />
 
             <button @click="openFileDialog" class="buttonFile">Enviar arquivos</button>
@@ -65,6 +65,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import router from "@/router";
+import "firebase/compat/storage";
 
 export default {
   data() {
@@ -74,8 +75,16 @@ export default {
       preco: "",
       estoque: "",
       descricao: "",
-      files: []
+      files: [],
+      fileUrl:''
     };
+  },
+  computed: {
+    fileName() {
+      const { files } = this
+      const split = files[0].name.split('.')
+      return `${split[0]}-${new Date().getTime()}.${split[1]}`
+    }
   },
   methods: {
     openFileDialog() {
@@ -91,27 +100,31 @@ export default {
 
     async adicionarProduto() {
       const db = firebase.firestore();
-      try {
-        await db.collection("products").add({
-          nome: this.nome,
-          categoria: this.categoria,
-          preco: this.preco,
-          estoque: this.estoque,
-          descricao: this.descricao,
-        });
-        this.nome = "";
-        this.categoria = "";
-        this.preco = "";
-        this.estoque = "";
-        this.descricao = "";
+      const storage = firebase.storage();
+      const promises = []
 
-        alert("Produto adicionado com sucesso");
-        router.push("/home")
-      } catch (error) {
-        alert("Deu BO ae: " + error)
-        console.error(error);
-      }
-    },
+      this.files.forEach(file => {
+        const ref = storage.ref(`${window.uid}/${file.name}`);
+        promises.push(ref.put(file, { contentType: file.type }).then(() => ref.getDownloadURL()))
+      })
+
+      Promise.all(promises)
+        .then(async urls => {
+          await db.collection("products").add({
+            nome: this.nome,
+            categoria: this.categoria,
+            preco: this.preco,
+            estoque: this.estoque,
+            descricao: this.descricao,
+            fileUrl: urls
+          });
+          alert("Produto adicionado com sucesso");
+          router.push("/")
+        })
+        .catch(error => {
+          console.error(error)
+        });
+    }
   }
 };
 </script>
