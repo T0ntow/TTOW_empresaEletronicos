@@ -1,5 +1,4 @@
 <template>
-
   <body>
     <main id="inicio">
       <div class="box-produto">
@@ -30,9 +29,11 @@
           </div>
           <div class="entrega"></div>
           <div class="box-adicionar-produto">
-            <button id="comprar">
-              <img src="https://cdn-icons-png.flaticon.com/512/126/126510.png" alt="">
+            <router-link to="/comprar">
+              <button id="comprar">
+                <img src="https://cdn-icons-png.flaticon.com/512/126/126510.png" alt="">
               Comprar</button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -95,12 +96,16 @@ export default {
 body {
   padding: 15px;
 }
-
+main{
+  margin-top: 20px;
+}
 h3 {
   color: #2f67af;
   font-size: 1.5rem;
 }
-
+a{
+  text-decoration: none;
+}
 .box-produto {
   width: 100%;
   height: 550px;

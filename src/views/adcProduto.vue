@@ -1,5 +1,4 @@
 <template>
-
   <body>
     <main id="inicio">
       <form @submit.prevent="adicionarProduto">

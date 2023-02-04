@@ -1,5 +1,5 @@
 <template>
-  <nav id="nav-bar-principal" v-if="$route.path !== '/login' && $route.path !== '/register'">
+  <nav id="nav-bar-principal" v-if="$route.path !== '/login' && $route.path !== '/register' &&  $route.path  !== '/comprar'">
     <div class="menu-hamburger">
       <input class="checkbox" type="checkbox" />
       <div class="hamburger-lines">
@@ -19,15 +19,11 @@
             Adicionar Produto
           </router-link>
         </li>
-        <li class="item-menu"> <router-link to="/carrinho" class="item-menu">
-            Carrinho
-          </router-link></li>
-        <li class="item-menu">Teste3</li>
-        <li class="item-menu">Teste4</li>
+       
         <li class="item-menu sair-menu" v-if="loggedIn" @click="sair">Sair</li>
         <div v-else> 
           <li class="item-menu login-menu"> <router-link to="/login">Login</router-link></li>
-          <li class="item-menu cadastro-menu"> <router-link to="/cadastro">Cadastro</router-link></li>
+          <li class="item-menu cadastro-menu"> <router-link to="/register">Cadastro</router-link></li>
         </div>
       </div>
     </div>

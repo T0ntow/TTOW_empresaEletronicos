@@ -11,7 +11,9 @@
         <p>Contato: wellingtonbs109@gmail.com</p>
       </div>
       <hr>
-      <div class="logo"><img src="../assets/logotipo.png" id="logo" alt=""></div>
+      <router-link to="/">
+        <div class="logo"><img src="../assets/logotipo.png" id="logo" alt=""></div>
+      </router-link>
     </footer>
   </body>
 </template>

@@ -1,7 +1,6 @@
 <template>
   <div class="produtos" v-for="produto in produtos" :key="produto.id">
     <router-link :to="'/produto/' + produto.id" class="produto">
-
       <div class="info">
         <span v-if="produto.estoque > 0" id="estoque-cheio"> Restam <p id="qtd-estoque">{{ produto.estoque }}</p> unid
         </span>
@@ -12,9 +11,11 @@
       <h2 id="name">{{ produto.nome }}</h2>
       <h2 id="price"> R$ {{ produto.preco }} </h2>
 
-      <button id="comprar">
-        <img src="https://cdn-icons-png.flaticon.com/512/126/126510.png" alt="">
-        Comprar</button>
+      <router-link to="/comprar">
+        <button id="comprar">
+          <img src="https://cdn-icons-png.flaticon.com/512/126/126510.png" alt="">
+          Comprar</button>
+      </router-link>
     </router-link>
   </div>
 </template>
@@ -52,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
 .produtos {
   display: flex;
   flex-direction: column;
@@ -141,9 +145,9 @@ export default {
 
 #comprar {
   height: 35px;
+  width: 200px;
   border: none;
-  width: 95%;
-  border-radius: 4px;
+  border-radius: 4px; 
   cursor: pointer;
   font-weight: bolder;
   font-size: small;

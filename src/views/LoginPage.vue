@@ -11,6 +11,8 @@
                 <label for="">Senha</label>
                 <input type="password" class="senha" required v-model="password" />
                 <button id="login" @click="login">Continuar</button>
+
+                <button  id="google"  @click="loginWithGoogle">Login with Google</button>
             </form>
         </div>
         <div class="nova-conta">
@@ -32,6 +34,7 @@ export default defineComponent({
         return {
             email: '',
             password: '',
+            provider: new firebase.auth.GoogleAuthProvider()
         }
     },
     methods: {
@@ -46,13 +49,27 @@ export default defineComponent({
         register() {
             router.push('./register')
         },
+
+        async loginWithGoogle() {
+            try {
+                const { user } = await firebase.auth().signInWithPopup(this.provider)
+                const db = firebase.firestore();
+                const userRef = db.collection('users').doc(user.uid);
+                const snapshot = await userRef.get();
+                if(!snapshot.exists){
+                  await userRef.set({
+                    name: user.displayName,
+                    email: user.email,
+                    uid: user.uid
+                  });
+                }
+                router.push('/')
+            } catch (err) {
+                alert('deu BO ae em:  ' + err.message)
+            }
+        },
     },
 });
-    // firebase.auth().onAuthStateChanged(function (user) {
-    //     if (user) {
-    //         router.push('./home')
-    //     }
-    // })
 
 </script>
 <style scoped>
@@ -89,6 +106,16 @@ main h1 {
 #login:hover {
     background-image: linear-gradient(#2a4d7ae0, #2d4158ef);
 }
+
+#google {
+    margin-top: 15px;
+    height: 30px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #35b735b9;
+} 
 
 #register {
     height: 30px;
