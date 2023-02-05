@@ -1,6 +1,6 @@
 # TTOW  - Empresa para estudos
 
-## link do projeto: https://toow.netlify.app/
+## link do projeto: https://ttow.netlify.app/
 
 ## Project setup
 ```
