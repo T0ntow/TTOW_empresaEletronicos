@@ -12,7 +12,7 @@
                 <input type="password" class="senha" required v-model="password" />
                 <button id="login" @click="login">Continuar</button>
 
-                <button  id="google"  @click="loginWithGoogle">Login with Google</button>
+                <button id="google"  @click="loginWithGoogle">Login with Google</button>
             </form>
         </div>
         <div class="nova-conta">
@@ -38,7 +38,7 @@ export default defineComponent({
         }
     },
     methods: {
-        async submitForm() {
+        async login() {
             try {
                 await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
                 router.push('/')
