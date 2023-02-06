@@ -4,7 +4,7 @@
             <img src="../assets/logotipo.png" alt="" id="logo-empresa" />
         </router-link>
         <div class="register-page">
-            <form @submit.prevent="submitForm">
+            <form @submit.prevent="">
                 <h1>Entrar na conta</h1>
                 <label for="">E-mail</label>
                 <input type="email" class="email" required v-model="email" />
