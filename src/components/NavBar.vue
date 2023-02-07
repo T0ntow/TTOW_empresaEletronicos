@@ -30,7 +30,7 @@
     <div class="nav-left">
       <router-link class="logo link" to="/"><img id="logo-empresa" src="../assets/logotipo.png" alt="" /></router-link>
       <router-link to="/adcProduto" class="link">
-        <p>Adicionar Produto</p>
+        <p class="adc-produto">Adicionar Produto</p>
       </router-link>
       <div class="search">
         <input type="text" v-model="search" placeholder="Busque por um item" />
@@ -52,16 +52,9 @@
       <router-link to="/login" v-else> Olá, Faça seu login</router-link>
       <button @click="sair">Sair</button>
     </div>
-    <div class="nav-before">
-      <a class="item-nav">Periféricos</a>
-      <a class="item-nav">Celulares</a>
-      <a class="item-nav">Tv's</a>
-      <a class="item-nav">Computadores</a>
-      <a class="item-nav">Relógios</a>
-      <a class="item-nav">Câmeras</a>
-    </div>
   </nav>
-
+  <div class="nav-before">
+  </div>
 </template>
   
 <script>
@@ -156,8 +149,10 @@ export default {
 #nav-bar-principal {
   display: flex;
   align-items: center;
+  align-content: center;
+  bottom: 50%;
   justify-content: space-between;
-  height: 8vh;
+  height: 55px;
 
   background-color: #131921;
 }
@@ -435,16 +430,8 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 }
 
 .nav-before {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: absolute;
-
-  text-transform: uppercase;
-
-  height: 35px;
+  height: 10px;
   width: 100%;
-  margin-top: 85px;
   background-color: #232f3e;
 }
 
@@ -464,5 +451,38 @@ input[type="checkbox"]:checked~.hamburger-lines .line3 {
 
   background-color: #1c2635;
   border: 1px solid white;
+}
+
+@media screen and (max-width: 1200px) {
+  .nav-right {
+    display: none;
+  }
+  #nav-bar-principal{
+    justify-content: left;
+  }
+
+  .nav-left{
+    margin-left: 120px;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .adc-produto { 
+    display:none;
+  }
+  #nav-bar-principal .nav-left{
+    margin-left: 0px;
+    width: 100vw;
+  }
+  .nav-left .search{
+    width: 100%; 
+  }
+  .nav-left .search input{
+    width: 80%;
+  }
+  #logo-empresa{
+    display:none;
+  }
+  
 }
 </style>

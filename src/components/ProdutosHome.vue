@@ -56,6 +56,7 @@ export default {
 a{
   text-decoration: none;
 }
+
 .produtos {
   display: flex;
   flex-direction: column;
@@ -167,4 +168,10 @@ a{
   margin-right: 10px;
 }
 
+
+@media screen and (max-width: 800px) {
+  .produtos .produto {
+    width: 200px;
+  }
+}
 </style>

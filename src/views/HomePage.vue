@@ -1,8 +1,8 @@
 <template>
   <body>
     <main id="inicio">
-      <h2>Produtos recentes</h2>
       <div class="box-produtos" ref="boxProdutos">
+        <h2>Produtos recentes</h2>
         <button class="setas seta-esquerda" @click="scrollBack">
           <img src="../assets/left-arrow.png" class="img-seta" alt="" />
         </button>
@@ -53,30 +53,22 @@ body {
   background-color: #eaeded;
 }
 
+h2{
+  position:absolute;
+  top:120px;
+  text-indent: 20px;
+}
+
 .box-produtos {
   display: flex;
-  flex-direction: row;
   overflow-x: auto;
   overflow-y: auto;
-  margin: auto;
+  margin: 0px auto;
   align-items: center;
-  justify-content: space-around;
-}
 
-.produtos {
-  height: 250px;
-  width: 350px;
-
-  background-color: #fff;
-  margin: 15px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.produtos .produto {
-  width: 300px;
-  height: 200px;
+  scroll-behavior: smooth;
+  width: 80%;
+  height: 500px;
 }
 
 .setas {
@@ -108,5 +100,10 @@ body {
 .img-seta {
   width: 20px;
   height: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .box-produtos {
+  }
 }
 </style>
